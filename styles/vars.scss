@@ -1,0 +1,32 @@
+:root {
+  // Bases of colors
+  --base-black: 0, 0%;
+  --base-white: 0, 100%;
+  --base-primary-bg: 0, 0%;
+  --base-primary-blue: 238, 61%;
+  --base-primary-red: 4, 85%;
+
+  // Hsla
+  --black-hsla: hsla(var(--base-black), 0%, 1);
+  --white-hsla: hsla(var(--base-white), 100%, 1);
+  --primary-bg-hsla: hsla(var(--base-primary-bg), 9%, 1);
+  --darken-black-custom-hsla: hsla(var(--base-primary-bg), 5%, 1);
+  --primary-color-hsla: hsla(var(--base-primary-bg), 13%, 1);
+  --primary-black-hsla: hsla(var(--base-primary-bg), 11%, 1);
+  --primary-red-hsla: hsla(var(--base-primary-red), 54%, 1);
+  --primary-darken-red-hsla: hsla(var(--base-primary-red), 40%, 1);
+  --primary-blue-hsla: hsla(var(--base-primary-blue), 49%, 1);
+  --primary-darken-blue-hsla: hsla(var(--base-primary-blue), 40%, 1);
+
+  // Resulutions
+  --max-width-container: 1230;
+  --max-width: 1920;
+  --sidebar-width: calc(
+    310px + (400 - 310) * ((100vw - 320px) / (var(--max-width) - 320))
+  );
+
+  // Fonts
+  --default-font-size: 14px;
+  --default-font-weight: 400;
+  --defaul-font-family: 'Robot';
+}

@@ -1,0 +1,9 @@
+$maxWidth: 1920;
+
+@function adaptive-value($maxValue, $minValue, $resolution: 320) {
+  $addValue: $maxValue - $minValue;
+  @return calc(
+    #{$minValue + px} + #{$addValue} *
+      ((100vw - #{$resolution + px}) / #{$maxWidth - $resolution})
+  );
+}

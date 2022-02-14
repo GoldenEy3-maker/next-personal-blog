@@ -1,0 +1,46 @@
+@import './lib.scss';
+@import './vars.scss';
+@import './functions.scss';
+@import './mixins.scss';
+@import './fonts.scss';
+
+*,
+*:after,
+*:before {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--defaul-font-family), sans-serif;
+  font-size: var(--default-font-size);
+  font-weight: var(--default-font-weight);
+
+  color: var(--white-hsla);
+  background-color: var(--primary-bg-hsla);
+}
+
+a {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+
+  color: inherit;
+
+  text-decoration: none;
+}
+
+.wrapper {
+  width: 100%;
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow-x: hidden;
+}
+
+.page-content {
+  @media (min-width: 991.98px) {
+    padding-left: var(--sidebar-width);
+  }
+}
