@@ -15,8 +15,8 @@ body {
   font-size: var(--default-font-size);
   font-weight: var(--default-font-weight);
 
-  color: var(--white-hsla);
-  background-color: var(--primary-bg-hsla);
+  color: var(--white-hsl);
+  background-color: var(--primary-bg-hsl);
 }
 
 a {
@@ -39,7 +39,17 @@ a {
   overflow-x: hidden;
 }
 
+.__container {
+  max-width: 930px;
+  width: 100%;
+
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
 .page-content {
+  padding-top: 80px;
+
   @media (min-width: 991.98px) {
     padding-left: var(--sidebar-width);
   }

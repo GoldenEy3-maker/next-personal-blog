@@ -7,24 +7,31 @@ import SidebarBgPicture from '../public/images/Sidebar_bg_picture2.jpg'
 import Avatar from '../public/images/avatar.jpg'
 import Navigation from './Navigation'
 
-import { TSidebarAndHeaderProps } from '../types'
+import { useSidebarContext } from './context/sidebarContext'
 
-const Sidebar = ({
-  sidebarIsOpen,
-  handleSidebarState,
-}: TSidebarAndHeaderProps) => {
+import { setDynamicClasses, setStaticClasses } from '../helpers'
+import { useWindowContext } from './context/globalWindowContext'
+
+const Sidebar = () => {
+  const { state, handleToggleState } = useSidebarContext()
+  const isLaptopSize = useWindowContext()
+
   return (
     <>
       <div
-        className={`${styles.sidebar__mask}${
-          sidebarIsOpen ? ` ${styles.__sidebarOpen}` : ''
-        }`}
-        onClick={handleSidebarState}
+        className={setDynamicClasses(
+          styles.sidebar__mask,
+          styles.__sidebarOpen,
+          state
+        )}
+        onClick={handleToggleState}
       ></div>
       <aside
-        className={`${styles.sidebar}${
-          sidebarIsOpen ? ` ${styles.__sidebarOpen}` : ''
-        }`}
+        className={setDynamicClasses(
+          styles.sidebar,
+          styles.__sidebarOpen,
+          state
+        )}
       >
         <div className={styles.sidebar__inner}>
           <div className={styles.__flexContainer}>
@@ -152,7 +159,7 @@ const Sidebar = ({
                   компаниях и наработал более 10 000 часов в создании сайтов
                   различной сложности.
                 </p>
-                <Navigation />
+                {isLaptopSize && <Navigation />}
               </div>
             </div>
           </div>
@@ -160,14 +167,20 @@ const Sidebar = ({
             <Link href=''>
               <a>
                 <button
-                  className={`${styles.sidebarControls__button} ${styles.sidebarControls__button__red}`}
+                  className={setStaticClasses([
+                    styles.sidebarControls__button,
+                    styles.sidebarControls__button__red,
+                  ])}
                 >
                   Мои работы
                 </button>
               </a>
             </Link>
             <button
-              className={`${styles.sidebarControls__button} ${styles.sidebarControls__button__blue}`}
+              className={setStaticClasses([
+                styles.sidebarControls__button,
+                styles.sidebarControls__button__blue,
+              ])}
             >
               Написать мне
             </button>

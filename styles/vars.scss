@@ -6,17 +6,17 @@
   --base-primary-blue: 238, 61%;
   --base-primary-red: 4, 85%;
 
-  // Hsla
-  --black-hsla: hsla(var(--base-black), 0%, 1);
-  --white-hsla: hsla(var(--base-white), 100%, 1);
-  --primary-bg-hsla: hsla(var(--base-primary-bg), 9%, 1);
-  --darken-black-custom-hsla: hsla(var(--base-primary-bg), 5%, 1);
-  --primary-color-hsla: hsla(var(--base-primary-bg), 13%, 1);
-  --primary-black-hsla: hsla(var(--base-primary-bg), 11%, 1);
-  --primary-red-hsla: hsla(var(--base-primary-red), 54%, 1);
-  --primary-darken-red-hsla: hsla(var(--base-primary-red), 40%, 1);
-  --primary-blue-hsla: hsla(var(--base-primary-blue), 49%, 1);
-  --primary-darken-blue-hsla: hsla(var(--base-primary-blue), 40%, 1);
+  // Hsl
+  --black-hsl: hsl(var(--base-black), 0%);
+  --white-hsl: hsl(var(--base-white), 100%);
+  --primary-bg-hsl: hsl(var(--base-primary-bg), 9%);
+  --darken-black-custom-hsl: hsl(var(--base-primary-bg), 5%);
+  --primary-color-hsl: hsl(var(--base-primary-bg), 13%);
+  --primary-black-hsl: hsl(var(--base-primary-bg), 11%);
+  --primary-red-hsl: hsl(var(--base-primary-red), 54%);
+  --primary-darken-red-hsl: hsl(var(--base-primary-red), 40%);
+  --primary-blue-hsl: hsl(var(--base-primary-blue), 49%);
+  --primary-darken-blue-hsl: hsl(var(--base-primary-blue), 40%);
 
   // Resulutions
   --max-width-container: 1230;
@@ -29,4 +29,7 @@
   --default-font-size: 14px;
   --default-font-weight: 400;
   --defaul-font-family: 'Robot';
+
+  // Animations
+  --pop-cubic-bazier: cubic-bezier(0.3, 0.16, 0.13, 1.57);
 }

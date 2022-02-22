@@ -2,22 +2,24 @@ import Navigation from './Navigation'
 
 import styles from '../styles/modules/Header.module.scss'
 
-import { TSidebarAndHeaderProps } from '../types'
+import { useSidebarContext } from './context/sidebarContext'
+import { setDynamicClasses } from '../helpers'
 
-const Header = ({
-  handleSidebarState,
-  sidebarIsOpen,
-}: TSidebarAndHeaderProps) => {
+const Header = () => {
+  const { state, handleToggleState } = useSidebarContext()
+
   return (
     <header className={styles.header}>
       <div className={styles.header__inner}>
         <div className={styles.header__left}>
           <Navigation />
           <div
-            className={`${styles.burger}${
-              sidebarIsOpen ? ` ${styles.__burgerActive}` : ''
-            }`}
-            onClick={handleSidebarState}
+            className={setDynamicClasses(
+              styles.burger,
+              styles.__burgerActive,
+              state
+            )}
+            onClick={handleToggleState}
           >
             <div className={styles.burger__inner}>
               <span></span>

@@ -1,20 +1,14 @@
-import { ReactNode, useState } from 'react'
 import Head from 'next/head'
 
 import Header from './Header'
 import Sidebar from './Sidebar'
 
-type TMainLayoutProps = {
-  children: ReactNode
-}
+import { SidebarContextProvider } from './context/sidebarContext'
+import { WindowContextProvider } from './context/globalWindowContext'
 
-const MainLayout = ({ children }: TMainLayoutProps) => {
-  const [sidebarIsOpen, setSidebarIsOpen] = useState(false)
+import { TChildrenProps } from '../types'
 
-  const handleSidebarState = () => {
-    setSidebarIsOpen((prev) => (prev === true ? false : true))
-  }
-
+const MainLayout = ({ children }: TChildrenProps) => {
   return (
     <>
       <Head>
@@ -22,14 +16,12 @@ const MainLayout = ({ children }: TMainLayoutProps) => {
       </Head>
 
       <div className='wrapper'>
-        <Sidebar
-          sidebarIsOpen={sidebarIsOpen}
-          handleSidebarState={handleSidebarState}
-        />
-        <Header
-          handleSidebarState={handleSidebarState}
-          sidebarIsOpen={sidebarIsOpen}
-        />
+        <WindowContextProvider>
+          <SidebarContextProvider>
+            <Sidebar />
+            <Header />
+          </SidebarContextProvider>
+        </WindowContextProvider>
         <main className='page-content'>{children}</main>
       </div>
     </>

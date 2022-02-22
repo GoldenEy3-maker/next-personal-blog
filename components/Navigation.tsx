@@ -1,12 +1,40 @@
 import Link from 'next/link'
-import { MouseEvent } from 'react'
+import { MouseEvent, useEffect, useRef, useState } from 'react'
 
 import styles from '../styles/modules/Navigation.module.scss'
 
+import { useWindowContext } from './context/globalWindowContext'
+
+import { setDynamicClasses } from '../helpers'
+
+type TSubmenuState = {
+  height: number | undefined
+  isActive: boolean
+}
+
 const Navigation = () => {
-  const clickNavItem = (event: MouseEvent<HTMLLIElement>) => {
-    event.currentTarget.classList.toggle(styles.__active_submenu)
+  const [submenuState, setSubmenuState] = useState<TSubmenuState>({
+    height: undefined,
+    isActive: true,
+  })
+
+  const isLaptopSize = useWindowContext()
+
+  const refSubmenu = useRef<HTMLDivElement>(null)
+
+  const toggleSubmenu = () => {
+    setSubmenuState((state) => ({ ...state, isActive: !state.isActive }))
   }
+
+  useEffect(() => {
+    if (window.innerWidth <= 991.98) {
+      setSubmenuState((state) => ({
+        ...state,
+        height: refSubmenu.current?.clientHeight,
+        isActive: false,
+      }))
+    }
+  }, [])
 
   return (
     <nav className={styles.nav} data-navigation-selector>
@@ -18,8 +46,12 @@ const Navigation = () => {
             </Link>
           </li>
           <li
-            className={`${styles.nav__item} ${styles.__submenu}`}
-            onClick={clickNavItem}
+            className={setDynamicClasses(
+              styles.nav__item,
+              styles.__active_submenu,
+              submenuState.isActive
+            )}
+            onClick={toggleSubmenu}
           >
             <Link href=''>
               <a>
@@ -38,8 +70,25 @@ const Navigation = () => {
               </a>
             </Link>
 
-            <div className={styles.navSubmenu}>
-              <ul className={styles.navSubmenu__list}>
+            <div
+              ref={refSubmenu}
+              className={styles.navSubmenu}
+              style={
+                isLaptopSize
+                  ? {
+                      height: submenuState.isActive
+                        ? `${submenuState.height}px`
+                        : 0,
+                    }
+                  : {}
+              }
+            >
+              <ul
+                className={styles.navSubmenu__list}
+                onClick={(event: MouseEvent<HTMLUListElement>) =>
+                  event.stopPropagation()
+                }
+              >
                 <li className={styles.navSubmenu__item}>
                   <Link href=''>
                     <a>Создание сайтов</a>

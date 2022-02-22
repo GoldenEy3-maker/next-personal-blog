@@ -1,4 +1,5 @@
-export type TSidebarAndHeaderProps = {
-  handleSidebarState: VoidFunction
-  sidebarIsOpen: boolean
+import { ReactNode } from "react";
+
+export type TChildrenProps = {
+  children: ReactNode
 }
