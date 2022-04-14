@@ -1,0 +1,60 @@
+.responseMessage {
+  margin: 50px 0 0;
+
+  height: 55px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: height 0.2s ease, margin 0.2s ease, opacity 0.2s ease,
+    visibility 0.2s ease, transform 0.2s ease;
+
+  &._hideMessage {
+    height: 0;
+
+    margin: 0;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform: translateX(30px);
+  }
+
+  &__inner {
+    cursor: pointer;
+
+    position: relative;
+
+    max-width: 400px;
+
+    padding: 15px;
+
+    border-radius: 10px;
+
+    background-color: var(--primary-blue-hsl);
+
+    box-shadow: 0 0 10px rgba(black, 0.3);
+
+    transition: background-color 0.2s ease;
+
+    ._successMessage & {
+      background-color: hsl(var(--base-green-color), 30%);
+    }
+
+    ._warningMessage & {
+      background-color: hsl(var(--base-yellow-bg), 23%);
+    }
+
+    ._dangerMessage & {
+      background-color: hsl(var(--base-primary-red), 30%);
+    }
+  }
+
+  &__text {
+    word-wrap: break-word;
+
+    font-size: 20px;
+    line-height: 25px;
+  }
+}

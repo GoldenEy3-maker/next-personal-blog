@@ -1,10 +1,12 @@
 :root {
   // Bases of colors
   --base-black: 0, 0%;
-  --base-white: 0, 100%;
+  --base-white: 0, 0%;
   --base-primary-bg: 0, 0%;
   --base-primary-blue: 238, 61%;
   --base-primary-red: 4, 85%;
+  --base-yellow-bg: 67, 100%;
+  --base-green-color: 113, 85%;
 
   // Hsl
   --black-hsl: hsl(var(--base-black), 0%);
@@ -17,6 +19,10 @@
   --primary-darken-red-hsl: hsl(var(--base-primary-red), 40%);
   --primary-blue-hsl: hsl(var(--base-primary-blue), 49%);
   --primary-darken-blue-hsl: hsl(var(--base-primary-blue), 40%);
+  --placeholder-color-hsl: hsl(var(--base-white), 70%);
+  --primary-yellow-bg-hsl: hsl(var(--base-yellow-bg), 30%);
+  --primary-yellow-bg-hsla: hsla(var(--base-yellow-bg), 30%, 0.8);
+  --primary-green-color-hsl: hsl(var(--base-green-color), 41%);
 
   // Resulutions
   --max-width-container: 1230;

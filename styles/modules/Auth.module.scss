@@ -1,0 +1,85 @@
+@import '../functions.scss';
+
+.auth {
+  width: 100%;
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__inner {
+    flex: 0 1 650px;
+
+    padding: 40px;
+    margin: 50px 0;
+
+    background-color: var(--primary-color-hsl);
+
+    border-radius: 10px;
+  }
+
+  &__title {
+    text-align: center;
+
+    font-size: 30px;
+
+    margin-bottom: 50px;
+  }
+}
+
+.authForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.authFormInputs {
+  &__list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.authFormInputsItem {
+  display: flex;
+  flex-direction: column;
+
+  width: 350px;
+}
+
+.authFormControls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 50px;
+
+  > button {
+    font-size: 20px;
+
+    padding: 8px 15px;
+    margin: 0 10px;
+
+    color: var(--white-hsl);
+    background-color: var(--primary-blue-hsl);
+
+    border-radius: 10px;
+    border: none;
+
+    transition: background-color 0.2s ease;
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+
+    &:not(:disabled) {
+      cursor: pointer;
+      &:hover {
+        background-color: var(--primary-darken-blue-hsl);
+      }
+    }
+  }
+}

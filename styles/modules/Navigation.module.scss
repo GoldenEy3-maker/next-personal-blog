@@ -1,3 +1,5 @@
+@import '../functions.scss';
+
 .nav {
   display: flex;
   align-items: center;
@@ -43,13 +45,9 @@
       transition: background-color 0.2s ease;
 
       @media screen and (min-width: 991.98px) {
-        font-size: calc(
-          15px + (18 - 15) * ((100vw - 991.98px) / (var(--max-width) - 991.98))
-        );
+        font-size: adaptive-value(18, 15, 991.98);
 
-        padding: calc(
-          11px + (15 - 11) * ((100vw - 991.98px) / (var(--max-width) - 991.98))
-        );
+        padding: adaptive-value(15, 11, 991.98);
       }
 
       @media (max-width: 991.98px) {
@@ -170,13 +168,9 @@
       padding: 10px 0;
 
       @media (min-width: 991.98px) {
-        font-size: calc(
-          18px + (20 - 18) * ((100vw - 991.98px) / (var(--max-width) - 991.98))
-        );
-        padding: calc(
-            8px + (10 - 8) * ((100vw - 991.98px) / (var(--max-width) - 991.98))
-          )
-          0;
+        font-size: adaptive-value(20, 18, 991.98);
+        padding: adaptive-value(10, 8, 991.98) 0;
+
         &:after {
           content: '';
 
@@ -205,19 +199,13 @@
 
   @media screen and (min-width: 991.98px) {
     &__list {
-      padding: calc(
-        13px + (15 - 13) * ((100vw - 991.98px) / (var(--max-width) - 991.98))
-      );
+      padding: adaptive-value(15, 13, 991.98);
 
-      padding-right: calc(
-        25px + (30 - 25) * ((100vw - 991.98px) / (var(--max-width) - 991.98))
-      );
+      padding-right: adaptive-value(30, 25, 991.98);
     }
 
     &__item {
-      font-size: calc(
-        16px + (20 - 16) * ((100vw - 991.98px) / (var(--max-width) - 991.98))
-      );
+      font-size: adaptive-value(20, 16, 991.98);
     }
   }
 }

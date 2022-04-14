@@ -1,14 +1,14 @@
+import type { ChildrenProps } from '../typescript/types'
+
 import Head from 'next/head'
 
 import Header from './Header'
 import Sidebar from './Sidebar'
 
-import { SidebarContextProvider } from './context/sidebarContext'
-import { WindowContextProvider } from './context/globalWindowContext'
+import { SidebarContextProvider } from '../context/sidebar.context'
+import { WindowContextProvider } from '../context/window.context'
 
-import { TChildrenProps } from '../types'
-
-const MainLayout = ({ children }: TChildrenProps) => {
+const MainLayout = ({ children }: ChildrenProps) => {
   return (
     <>
       <Head>

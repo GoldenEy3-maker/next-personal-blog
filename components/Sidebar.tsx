@@ -1,37 +1,38 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
-import styles from '../styles/modules/Sidebar.module.scss'
-
-import SidebarBgPicture from '../public/images/Sidebar_bg_picture2.jpg'
-import Avatar from '../public/images/avatar.jpg'
 import Navigation from './Navigation'
 
-import { useSidebarContext } from './context/sidebarContext'
+import { useSidebarContext } from '../context/sidebar.context'
+import { useWindowContext } from '../context/window.context'
 
-import { setDynamicClasses, setStaticClasses } from '../helpers'
-import { useWindowContext } from './context/globalWindowContext'
+import { setDynamicClasses, setStaticClasses } from '../lib/functions'
+
+import styles from '../styles/modules/Sidebar.module.scss'
+
+import Avatar from '../public/images/avatar.jpg'
+import SidebarBgPicture from '../public/images/Sidebar_bg_picture2.jpg'
 
 const Sidebar = () => {
-  const { state, handleToggleState } = useSidebarContext()
-  const isLaptopSize = useWindowContext()
+  const { isActive, toggleActiveState } = useSidebarContext()
+  const isWindowInLaptopSize = useWindowContext()
 
   return (
     <>
       <div
-        className={setDynamicClasses(
-          styles.sidebar__mask,
-          styles.__sidebarOpen,
-          state
-        )}
-        onClick={handleToggleState}
+        className={setDynamicClasses({
+          staticClasses: [styles.sidebar__mask],
+          dynamicClasses: [[styles.__sidebarOpen]],
+          conditions: [isActive],
+        })}
+        onClick={toggleActiveState}
       ></div>
       <aside
-        className={setDynamicClasses(
-          styles.sidebar,
-          styles.__sidebarOpen,
-          state
-        )}
+        className={setDynamicClasses({
+          staticClasses: [styles.sidebar],
+          dynamicClasses: [[styles.__sidebarOpen]],
+          conditions: [isActive],
+        })}
       >
         <div className={styles.sidebar__inner}>
           <div className={styles.__flexContainer}>
@@ -44,7 +45,7 @@ const Sidebar = () => {
             </div>
             <div className={styles.sidebar__profile}>
               <div className={styles.sidebarProfileAvatar}>
-                <Link href=''>
+                <Link href='#'>
                   <a>
                     <div className={styles.sidebarProfileAvatar__picture}>
                       <Image src={Avatar} alt='avatar' />
@@ -62,7 +63,7 @@ const Sidebar = () => {
                 <div className={styles.socialsSidebarProfileAvatar}>
                   <ul className={styles.socialsSidebarProfileAvatar__list}>
                     <li className={styles.socialsSidebarProfileAvatar__item}>
-                      <a href='' target='_blank'>
+                      <a href='#' target='_blank'>
                         <svg
                           width='25'
                           height='25'
@@ -101,7 +102,7 @@ const Sidebar = () => {
                       </a>
                     </li>
                     <li className={styles.socialsSidebarProfileAvatar__item}>
-                      <a href='' target='_blank'>
+                      <a href='#' target='_blank'>
                         <svg
                           width='25'
                           height='25'
@@ -123,7 +124,7 @@ const Sidebar = () => {
                       </a>
                     </li>
                     <li className={styles.socialsSidebarProfileAvatar__item}>
-                      <a href='' target='_blank'>
+                      <a href='#' target='_blank'>
                         <svg
                           width='25'
                           height='25'
@@ -159,31 +160,33 @@ const Sidebar = () => {
                   компаниях и наработал более 10 000 часов в создании сайтов
                   различной сложности.
                 </p>
-                {isLaptopSize && <Navigation />}
+                {isWindowInLaptopSize && <Navigation />}
               </div>
             </div>
           </div>
-          <div className={styles.sidebar__controls}>
-            <Link href=''>
-              <a>
-                <button
-                  className={setStaticClasses([
-                    styles.sidebarControls__button,
-                    styles.sidebarControls__button__red,
-                  ])}
-                >
-                  Мои работы
-                </button>
-              </a>
-            </Link>
-            <button
-              className={setStaticClasses([
-                styles.sidebarControls__button,
-                styles.sidebarControls__button__blue,
-              ])}
-            >
-              Написать мне
-            </button>
+          <div className={styles.sidebarControls}>
+            <div className={styles.sidebarControls__inner}>
+              <Link href='#'>
+                <a>
+                  <button
+                    className={setStaticClasses([
+                      styles.sidebarControls__button,
+                      styles.sidebarControls__button__red,
+                    ])}
+                  >
+                    Мои работы
+                  </button>
+                </a>
+              </Link>
+              <button
+                className={setStaticClasses([
+                  styles.sidebarControls__button,
+                  styles.sidebarControls__button__blue,
+                ])}
+              >
+                Написать мне
+              </button>
+            </div>
           </div>
         </div>
       </aside>

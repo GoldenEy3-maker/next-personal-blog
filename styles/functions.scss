@@ -1,9 +1,9 @@
-$maxWidth: 1920;
+@use 'sass:math';
 
 @function adaptive-value($maxValue, $minValue, $resolution: 320) {
-  $addValue: $maxValue - $minValue;
+  $addValue: $maxValue - math.abs($minValue);
   @return calc(
     #{$minValue + px} + #{$addValue} *
-      ((100vw - #{$resolution + px}) / #{$maxWidth - $resolution})
+      ((100vw - #{$resolution + px}) / #{calc(var(--max-width) - $resolution)})
   );
 }

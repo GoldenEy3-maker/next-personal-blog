@@ -1,12 +1,13 @@
 import Navigation from './Navigation'
 
+import { useSidebarContext } from '../context/sidebar.context'
+
+import { setDynamicClasses } from '../lib/functions'
+
 import styles from '../styles/modules/Header.module.scss'
 
-import { useSidebarContext } from './context/sidebarContext'
-import { setDynamicClasses } from '../helpers'
-
 const Header = () => {
-  const { state, handleToggleState } = useSidebarContext()
+  const { isActive, toggleActiveState } = useSidebarContext()
 
   return (
     <header className={styles.header}>
@@ -14,12 +15,12 @@ const Header = () => {
         <div className={styles.header__left}>
           <Navigation />
           <div
-            className={setDynamicClasses(
-              styles.burger,
-              styles.__burgerActive,
-              state
-            )}
-            onClick={handleToggleState}
+            className={setDynamicClasses({
+              staticClasses: [styles.burger],
+              dynamicClasses: [[styles.__burgerActive]],
+              conditions: [isActive],
+            })}
+            onClick={toggleActiveState}
           >
             <div className={styles.burger__inner}>
               <span></span>

@@ -1,14 +1,16 @@
+import type { ChildrenProps } from '../typescript/types'
+
 import { createContext, useContext } from 'react'
-import { TChildrenProps } from '../../types'
-import { useWindowResize } from '../../hooks'
 
-const WindowContext = createContext(false)
+import { useWindowResize } from '../hooks/window.hook'
 
-export const WindowContextProvider = ({ children }: TChildrenProps) => {
-  const isLaptopSize = useWindowResize()
+const WindowContext = createContext<boolean>(false)
+
+export const WindowContextProvider = ({ children }: ChildrenProps) => {
+  const isWindowInLaptopSize = useWindowResize()
 
   return (
-    <WindowContext.Provider value={isLaptopSize}>
+    <WindowContext.Provider value={isWindowInLaptopSize}>
       {children}
     </WindowContext.Provider>
   )

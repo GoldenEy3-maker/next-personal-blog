@@ -1,3 +1,5 @@
+@import '../functions.scss';
+
 .sidebar {
   position: fixed;
   top: 0;
@@ -39,6 +41,7 @@
   }
 
   &__inner {
+    position: relative;
     width: var(--sidebar-width);
     height: 100%;
 
@@ -80,25 +83,11 @@
   &__profile {
     transform: translateY(-20px);
 
-    padding: 0
-      calc(15px + (25 - 15) * ((100vw - 320px) / (var(--max-width) - 320)));
+    padding: 0 adaptive-value(25, 15);
 
     @media screen and (min-width: 991.98px) {
-      transform: translateY(
-        calc(
-          -50px + (25 - 50) * ((100vw - 991.98px) / (var(--max-width) - 991.98))
-        )
-      );
+      transform: translateY(adaptive-value(25, -50, 991.98));
     }
-  }
-
-  &__controls {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    padding: 0
-      calc(10px + (20 - 10) * ((100vw - 320px) / (var(--max-width) - 320)));
   }
 
   @media (max-width: 991.98px) {
@@ -148,19 +137,12 @@
 
   @media screen and (min-width: 991.98px) {
     &__picture {
-      width: calc(
-        100px + (150 - 100) * ((100vw - 991.98px) / (var(--max-width) - 991.98))
-      );
-      height: calc(
-        100px + (150 - 100) * ((100vw - 991.98px) / (var(--max-width) - 991.98))
-      );
+      width: adaptive-value(150, 100, 991.98);
+      height: adaptive-value(150, 100, 991.98);
     }
 
     &__info {
-      margin: calc(
-          15px + (20 - 15) * ((100vw - 991.98px) / (var(--max-width) - 991.98))
-        )
-        0;
+      margin: adaptive-value(20, 15, 991.98) 0;
     }
   }
 }
@@ -183,15 +165,11 @@
 
   @media screen and (min-width: 991.98px) {
     &__name {
-      font-size: calc(
-        18px + (20 - 18) * ((100vw - 991.98px) / (var(--max-width) - 991.98))
-      );
+      font-size: adaptive-value(20, 18, 991.98);
     }
 
     &__des {
-      font-size: calc(
-        14px + (16 - 14) * ((100vw - 991.98px) / (var(--max-width) - 991.98))
-      );
+      font-size: adaptive-value(16, 14, 991.98);
     }
   }
 }
@@ -220,9 +198,7 @@
 }
 
 .sidebarProfileDescription {
-  margin-top: calc(
-    15px + (30 - 15) * ((100vw - 320px) / (var(--max-width) - 320))
-  );
+  margin-top: adaptive-value(30, 15);
 
   &:before {
     content: '';
@@ -234,9 +210,7 @@
 
     background-color: var(--primary-black-hsl);
 
-    margin-bottom: calc(
-      20px + (30 - 20) * ((100vw - 320px) / (var(--max-width) - 320))
-    );
+    margin-bottom: adaptive-value(30, 20);
   }
 
   &__text {
@@ -251,12 +225,8 @@
     }
 
     &__text {
-      font-size: calc(
-        15px + (16 - 15) * ((100vw - 991.98px) / (var(--max-width) - 991.98))
-      );
-      line-height: calc(
-        20px + (22 - 20) * ((100vw - 991.98px) / (var(--max-width) - 991.98))
-      );
+      font-size: adaptive-value(16, 15, 991.98);
+      line-height: adaptive-value(22, 20, 991.98);
     }
 
     &:after {
@@ -275,6 +245,30 @@
 }
 
 .sidebarControls {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+
+  height: adaptive-value(200, 100, 991.98);
+
+  padding: 0 adaptive-value(20, 10);
+
+  &__inner {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: var(--primary-color-hsl);
+
+    transition: background-color 0.5s ease;
+
+    @media screen and (max-width: 991.98px) {
+      background-color: var(--darken-black-custom-hsl);
+    }
+  }
   &__button {
     cursor: pointer;
 
@@ -283,15 +277,11 @@
 
     color: inherit;
 
-    font-size: calc(
-      14px + (18 - 14) * ((100vw - 320px) / (var(--max-width) - 320))
-    );
+    font-size: adaptive-value(18, 14);
+
     font-weight: 500;
 
-    padding: calc(
-        15px + (17 - 15) * ((100vw - 320px) / (var(--max-width) - 320))
-      )
-      20px;
+    padding: adaptive-value(17, 15) 20px;
     margin: 0 10px;
 
     transition: background-color 0.2s ease;

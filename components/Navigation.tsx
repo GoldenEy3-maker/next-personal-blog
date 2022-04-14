@@ -1,24 +1,24 @@
 import Link from 'next/link'
 import { MouseEvent, useEffect, useRef, useState } from 'react'
 
+import { useWindowContext } from '../context/window.context'
+
+import { setDynamicClasses } from '../lib/functions'
+
 import styles from '../styles/modules/Navigation.module.scss'
 
-import { useWindowContext } from './context/globalWindowContext'
-
-import { setDynamicClasses } from '../helpers'
-
-type TSubmenuState = {
+type SubmenuState = {
   height: number | undefined
   isActive: boolean
 }
 
 const Navigation = () => {
-  const [submenuState, setSubmenuState] = useState<TSubmenuState>({
+  const [submenuState, setSubmenuState] = useState<SubmenuState>({
     height: undefined,
     isActive: true,
   })
 
-  const isLaptopSize = useWindowContext()
+  const isWindowInLaptopSize = useWindowContext()
 
   const refSubmenu = useRef<HTMLDivElement>(null)
 
@@ -26,34 +26,44 @@ const Navigation = () => {
     setSubmenuState((state) => ({ ...state, isActive: !state.isActive }))
   }
 
+  const handleActivSubmenuStyles = () => {
+    if (!isWindowInLaptopSize) {
+      return {}
+    }
+
+    return {
+      height: submenuState.isActive ? `${submenuState.height}px` : 0,
+    }
+  }
+
   useEffect(() => {
-    if (window.innerWidth <= 991.98) {
+    if (isWindowInLaptopSize) {
       setSubmenuState((state) => ({
         ...state,
         height: refSubmenu.current?.clientHeight,
         isActive: false,
       }))
     }
-  }, [])
+  }, [isWindowInLaptopSize])
 
   return (
     <nav className={styles.nav} data-navigation-selector>
       <div className={styles.nav__flexContainer}>
         <ul className={styles.nav__list}>
           <li className={styles.nav__item}>
-            <Link href=''>
+            <Link href='#'>
               <a>Главная</a>
             </Link>
           </li>
           <li
-            className={setDynamicClasses(
-              styles.nav__item,
-              styles.__active_submenu,
-              submenuState.isActive
-            )}
+            className={setDynamicClasses({
+              staticClasses: [styles.nav__item],
+              dynamicClasses: [[styles.__active_submenu]],
+              conditions: [submenuState.isActive],
+            })}
             onClick={toggleSubmenu}
           >
-            <Link href=''>
+            <Link href='#'>
               <a>
                 Статьи
                 <span className={styles.nav__item_icon}>
@@ -73,15 +83,7 @@ const Navigation = () => {
             <div
               ref={refSubmenu}
               className={styles.navSubmenu}
-              style={
-                isLaptopSize
-                  ? {
-                      height: submenuState.isActive
-                        ? `${submenuState.height}px`
-                        : 0,
-                    }
-                  : {}
-              }
+              style={handleActivSubmenuStyles()}
             >
               <ul
                 className={styles.navSubmenu__list}
@@ -90,17 +92,17 @@ const Navigation = () => {
                 }
               >
                 <li className={styles.navSubmenu__item}>
-                  <Link href=''>
+                  <Link href='#'>
                     <a>Создание сайтов</a>
                   </Link>
                 </li>
                 <li className={styles.navSubmenu__item}>
-                  <Link href=''>
+                  <Link href='#'>
                     <a>Интернет-маркетинг</a>
                   </Link>
                 </li>
                 <li className={styles.navSubmenu__item}>
-                  <Link href=''>
+                  <Link href='#'>
                     <a>Продвижение видео</a>
                   </Link>
                 </li>
@@ -108,12 +110,12 @@ const Navigation = () => {
             </div>
           </li>
           <li className={styles.nav__item}>
-            <Link href=''>
+            <Link href='#'>
               <a>Обо мне</a>
             </Link>
           </li>
           <li className={styles.nav__item}>
-            <Link href=''>
+            <Link href='#'>
               <a>Реклама</a>
             </Link>
           </li>
@@ -122,7 +124,7 @@ const Navigation = () => {
       <div className={styles.nav__flexContainer}>
         <ul className={styles.nav__list}>
           <li className={styles.nav__item}>
-            <Link href=''>
+            <Link href='#'>
               <a>Профиль</a>
             </Link>
           </li>

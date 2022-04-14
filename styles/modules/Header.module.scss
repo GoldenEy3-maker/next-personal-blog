@@ -1,9 +1,11 @@
 @import './Navigation.module.scss';
+@import '../functions.scss';
 
 .header {
   position: fixed;
   top: 0;
   right: 0;
+  z-index: 10;
 
   width: calc(100% - var(--sidebar-width));
 
@@ -50,14 +52,9 @@
     padding: 13px 15px;
 
     @media screen and (min-width: 991.98px) {
-      padding: calc(
-          11px + (16 - 11) * ((100vw - 991.98px) / (var(--max-width) - 991.98))
-        )
-        15px;
+      padding: adaptive-value(16, 11, 991.98) 15px;
 
-      font-size: calc(
-        14px + (16 - 14) * ((100vw - 991.98px) / (var(--max-width) - 991.98))
-      );
+      font-size: adaptive-value(16, 14, 991.98);
     }
   }
 }
