@@ -1,10 +1,8 @@
-import type { ChildrenProps } from '../typescript/types'
-import type { SidebarContext } from '../typescript/interfaces'
+import type { ChildrenProps, TSidebarContext } from '../typescript/types'
 
 import { createContext, useContext, useState } from 'react'
 
-
-const SidebarContext = createContext<SidebarContext | null>(null)
+const SidebarContext = createContext<TSidebarContext | null>(null)
 
 export const SidebarContextProvider = ({ children }: ChildrenProps) => {
   const [isActive, setIsActive] = useState(false)
@@ -13,7 +11,7 @@ export const SidebarContextProvider = ({ children }: ChildrenProps) => {
     setIsActive((prev) => !prev)
   }
 
-  const valueContext: SidebarContext = { isActive, toggleActiveState }
+  const valueContext: TSidebarContext = { isActive, toggleActiveState }
 
   return (
     <SidebarContext.Provider value={valueContext}>

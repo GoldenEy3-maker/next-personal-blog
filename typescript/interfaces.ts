@@ -5,10 +5,7 @@ import type {
   StrongPasswordOptions,
 } from './types'
 
-export interface SidebarContext {
-  isActive: boolean
-  toggleActiveState: () => void
-}
+
 
 export interface SetStaticClasses {
   (classes: string[]): string

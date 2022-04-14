@@ -11,6 +11,11 @@ export type ChildrenProps = {
     | string[]
 }
 
+export type TSidebarContext = {
+  isActive: boolean
+  toggleActiveState: () => void
+}
+
 export type ResponseData<DataType = null> = {
   success: boolean
   data: DataType
