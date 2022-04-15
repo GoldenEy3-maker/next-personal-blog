@@ -54,6 +54,7 @@ const handler: Endpoint<ResponseData> = async (req, res) => {
       { token: jwtToken, userId: existUser._id },
       { req, res, maxAge: 60 * 60 * 24 * 30 * 3, httpOnly: true, secure: true }
     )
+    setCookies(CookieType.AlreadyLogged, 1, { req, res })
 
     return res.status(200).json({
       success: true,

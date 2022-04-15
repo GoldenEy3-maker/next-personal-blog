@@ -29,4 +29,5 @@ export enum EndpointMessages {
 
 export enum CookieType {
   Authorization = 'authorization-token-key',
+  AlreadyLogged = '_already-logged',
 }

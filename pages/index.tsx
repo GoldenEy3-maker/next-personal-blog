@@ -1,4 +1,4 @@
-import type { NextPage } from 'next'
+import type { GetServerSideProps, NextPage } from 'next'
 import { ChangeEventHandler, FormEventHandler, useRef } from 'react'
 import type { AuthValues } from '../typescript/interfaces'
 import type {
@@ -7,6 +7,7 @@ import type {
   ResponseMessageState,
 } from '../typescript/types'
 import {
+  CookieType,
   ResponseMessageType,
   ValidationFormWarnings,
 } from '../typescript/enums'
@@ -23,6 +24,7 @@ import { useHttp } from '../hooks/http.hook'
 import { isStrongPassword } from '../lib/functions'
 
 import validator from 'validator'
+import { removeCookies, setCookies } from 'cookies-next'
 
 import styles from '../styles/modules/Auth.module.scss'
 
@@ -301,7 +303,6 @@ const AuthPage: NextPage = () => {
       if (!isLoginForm) {
         closeResponseMessage()
         setIsLoginForm(true)
-        console.log(passwordInputRef)
         passwordInputRef.current?.focus()
       } else {
         router.push('/user/home')
@@ -442,6 +443,30 @@ const AuthPage: NextPage = () => {
       </div>
     </AuthLayout>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  const authTokenCookie = req.cookies[CookieType.Authorization]
+  const _alreadyLoggedCookie = req.cookies[CookieType.AlreadyLogged]
+
+  if (authTokenCookie && _alreadyLoggedCookie === undefined) {
+    setCookies(CookieType.AlreadyLogged, 1, { req, res })
+
+    return {
+      redirect: {
+        destination: '/user/home',
+        permanent: false,
+      },
+    }
+  }
+
+  if (authTokenCookie === undefined && _alreadyLoggedCookie) {
+    removeCookies(CookieType.AlreadyLogged, { req, res })
+  }
+
+  return {
+    props: {},
+  }
 }
 
 export default AuthPage
