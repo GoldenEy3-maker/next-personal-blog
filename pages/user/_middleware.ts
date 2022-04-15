@@ -1,7 +1,4 @@
-import {
-  CookieType,
-  GlobalVariablesErrorMessages,
-} from '../../typescript/enums'
+import { CookieType } from '../../typescript/enums'
 import { NextMiddleware, NextResponse } from 'next/server'
 
 import jwt from 'jsonwebtoken'
@@ -10,13 +7,15 @@ const middleware: NextMiddleware = async (req, res) => {
   const authTokenCookie = req.cookies[CookieType.Authorization]
 
   if (authTokenCookie === undefined) {
-    return NextResponse.redirect('/')
+    throw new Error('Отсутсвует токент авторизации пользователя!')
+    // return NextResponse.redirect('/')
   }
 
   const jwtSecretKey = process.env.JWT_SECRET_KEY
 
   if (!jwtSecretKey) {
-    return NextResponse.redirect('/')
+    throw new Error('Jwt secret key is not defined!')
+    // return NextResponse.redirect('/')
   }
 
   const { token } = JSON.parse(authTokenCookie)
@@ -24,7 +23,8 @@ const middleware: NextMiddleware = async (req, res) => {
   const isValidToken = jwt.verify(token, jwtSecretKey)
 
   if (!isValidToken) {
-    return NextResponse.redirect('/')
+    throw new Error('Токен авторизации пользователя не прошел проверку!')
+    // return NextResponse.redirect('/')
   }
 
   return NextResponse.next()
