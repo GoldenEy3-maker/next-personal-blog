@@ -5,7 +5,7 @@ export enum ResponseMessageType {
 }
 
 export enum GlobalVariablesErrorMessages {
-  DatabaseURI = 'Отсутствует строка подключения к базе данных',
+  DatabaseURI = 'Отсутствует подключение к базе данных',
   JwtSecret = 'jwt secret key is not define',
 }
 
