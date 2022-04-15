@@ -13,7 +13,7 @@ const middleware: NextMiddleware = async (req, res) => {
     return NextResponse.redirect('/')
   }
 
-  const jwtSecretKey = process.env.JWT
+  const jwtSecretKey = process.env.JWT_SECRET_KEY
 
   if (!jwtSecretKey) {
     return NextResponse.redirect('/')
