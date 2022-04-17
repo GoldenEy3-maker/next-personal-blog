@@ -24,6 +24,10 @@ const {
   storiesItem__date,
 } = styles
 
+interface GetNewOffsetX {
+  <EventType>(event: EventType): number
+}
+
 const Stories = () => {
   const [isListDragging, setIsListDragging] = useState(false)
   const [offsetX, setOffsetX] = useState(0)
@@ -40,19 +44,25 @@ const Stories = () => {
   const currentListLenght = listLenght - slidersPerView
 
 
+  const getNewMouseOffsetX = useCallback((event: MouseEvent) => {
+    return currentOffsetXRef.current - (startXRef.current - event.clientX)
+  }, [])
+
+  const getNewTouchOffsetX = useCallback((event: TouchEvent) => {
+    return currentOffsetXRef.current - (startXRef.current - event.touches[0].clientX)
+  }, [])
+
   const swipeMouseAction = useCallback((event: MouseEvent) => {
-    const diff = startXRef.current - event.clientX
-    const newOffsetX = currentOffsetXRef.current - diff
+    const newOffsetX = getNewMouseOffsetX(event)
 
     setOffsetX(newOffsetX)
-  }, [])
+  }, [getNewMouseOffsetX])
 
 
   const swipeMouseEnd = useCallback((event: MouseEvent) => {
     setIsListDragging(false)
 
-    const diff = startXRef.current - event.clientX
-    const newOffsetX = currentOffsetXRef.current - diff
+    const newOffsetX = getNewMouseOffsetX(event)
 
     let newSlideIndex = Math.round(-newOffsetX / slideWidth)
 
@@ -65,7 +75,7 @@ const Stories = () => {
 
     document.removeEventListener('mousemove', swipeMouseAction)
     document.removeEventListener('mouseup', swipeMouseEnd)
-  }, [currentListLenght, slideWidth, swipeMouseAction])
+  }, [currentListLenght, slideWidth, swipeMouseAction, getNewMouseOffsetX])
 
   const swipeMouseStart: MouseEventHandler = (event) => {
     setIsListDragging(true)
@@ -77,19 +87,35 @@ const Stories = () => {
     document.addEventListener('mouseup', swipeMouseEnd)
   }
 
-  const swipeTouchAction = (event: TouchEvent) => {
+  const swipeTouchAction = useCallback((event: TouchEvent) => {
     const diff = startXRef.current - event.touches[0].clientX
     const newOffsetX = currentOffsetXRef.current - diff
 
     setOffsetX(newOffsetX)
-  }
+  }, [])
 
-  const swipeTouchEnd = (event: TouchEvent) => {
+  const swipeTouchEnd = useCallback((event: TouchEvent) => {
+    setIsListDragging(false)
+
+    const diff = startXRef.current - event.changedTouches[0].clientX
+    const newOffsetX = currentOffsetXRef.current - diff
+
+    let newSlideIndex = Math.round(-newOffsetX / slideWidth)
+
+    if (newSlideIndex > currentListLenght) newSlideIndex = currentListLenght
+    if (newSlideIndex < 0) newSlideIndex = 0
+
+    setSlideIndex(newSlideIndex)
+
+    setOffsetX(-(newSlideIndex * slideWidth))
+
     document.removeEventListener('touchmove', swipeTouchAction)
     document.removeEventListener('touchend', swipeTouchEnd)
-  }
+  }, [swipeTouchAction, currentListLenght, slideWidth])
 
   const swipeTouchStart: TouchEventHandler = (event) => {
+    setIsListDragging(true)
+
     currentOffsetXRef.current = offsetX
     startXRef.current = event.touches[0].clientX
 
