@@ -4,7 +4,6 @@ import { ResponseMessageType } from '../typescript/enums'
 import { setDynamicClasses } from '../lib/functions'
 
 import styles from '../styles/modules/ResponseMessage.module.scss'
-import { useEffect } from 'react'
 
 const {
   responseMessage,

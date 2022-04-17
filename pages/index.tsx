@@ -1,6 +1,6 @@
-import type { GetServerSideProps, NextPage } from 'next'
-import { ChangeEventHandler, FormEventHandler, useRef } from 'react'
-import type { AuthValues } from '../typescript/interfaces'
+import type {GetServerSideProps, NextPage} from 'next'
+import {ChangeEventHandler, FormEventHandler, useRef} from 'react'
+import type {AuthValues} from '../typescript/interfaces'
 import type {
   RequirementsPasswordState,
   ResponseData,
@@ -12,23 +12,23 @@ import {
   ValidationFormWarnings,
 } from '../typescript/enums'
 
-import { useRouter } from 'next/router'
-import { useState } from 'react'
+import {useRouter} from 'next/router'
+import {useState} from 'react'
 
 import AuthLayout from '../components/AuthLayout'
 import FormInput from '../components/FormInput'
 import ResponseMessage from '../components/ResponseMessage'
 
-import { useHttp } from '../hooks/http.hook'
+import {useHttp} from '../hooks/http.hook'
 
-import { isStrongPassword } from '../lib/functions'
+import {isStrongPassword} from '../lib/functions'
 
 import validator from 'validator'
-import { removeCookies, setCookies } from 'cookies-next'
+import {removeCookies, setCookies} from 'cookies-next'
 
 import styles from '../styles/modules/Auth.module.scss'
 
-enum ValidationFiledsState {
+enum ValidationFieldsState {
   IsPasswordConfirm = 'isPasswordConfirm',
   IsEmailCorrect = 'isEmailCorrect',
 }
@@ -90,7 +90,7 @@ const AuthPage: NextPage = () => {
     })
 
   const passwordInputRef = useRef<HTMLInputElement | null>(null)
-  const { request, isReguestInProcess } = useHttp()
+  const {request, isRequestInProcess} = useHttp()
   const router = useRouter()
 
   const requirementsPasswordList = {
@@ -112,17 +112,17 @@ const AuthPage: NextPage = () => {
     validator: string,
     value: boolean | undefined
   ) => {
-    setValidationValue((state) => ({ ...state, [validator]: value }))
+    setValidationValue((state) => ({...state, [validator]: value}))
   }
 
   const changeRequirementsState = (
-    requirment: string,
+    requirement: string,
     value: boolean | undefined
   ) => {
-    setRequirementsPasswordState((state) => ({ ...state, [requirment]: value }))
+    setRequirementsPasswordState((state) => ({...state, [requirement]: value}))
   }
 
-  const resetRequirmentState = () => {
+  const resetRequirementState = () => {
     setRequirementsPasswordState((state) => ({
       ...state,
       isMinLenght: undefined,
@@ -149,12 +149,12 @@ const AuthPage: NextPage = () => {
     }))
   }
 
-  const handlerRequirmentsPassword: ChangeEventHandler<HTMLInputElement> = (
+  const handlerRequirementsPassword: ChangeEventHandler<HTMLInputElement> = (
     event
   ) => {
     const currentValue = event.target.value
 
-    const isMinLentgh = isStrongPassword(currentValue, {
+    const isMinLenght = isStrongPassword(currentValue, {
       minLenght: 6,
     })
     const isMinUppercase = isStrongPassword(currentValue, {
@@ -167,7 +167,7 @@ const AuthPage: NextPage = () => {
 
     changeRequirementsState(
       RequirementsPasswordFieldsState.IsMinLenght,
-      isMinLentgh
+      isMinLenght
     )
     changeRequirementsState(
       RequirementsPasswordFieldsState.IsMinUppercase,
@@ -178,12 +178,10 @@ const AuthPage: NextPage = () => {
       isMinNumbers
     )
 
-    if (currentValue === '') resetRequirmentState()
+    if (currentValue === '') resetRequirementState()
   }
 
-  const validationRegisterConfirmPassword: ChangeEventHandler<
-    HTMLInputElement
-  > = (event) => {
+  const validationRegisterConfirmPassword: ChangeEventHandler<HTMLInputElement> = (event) => {
     const currentName = event.target.name
     const currentValue = event.target.value
     const isConfirmPasswordInput = currentName === 'confirmPassword'
@@ -199,14 +197,14 @@ const AuthPage: NextPage = () => {
       return
 
     changeValidationValue(
-      ValidationFiledsState.IsPasswordConfirm,
+      ValidationFieldsState.IsPasswordConfirm,
       isConfirmPasswordInput
         ? isGlobalValueInputMatches
         : isRegisterValueInputMatches
     )
 
     if (currentValue === '')
-      changeValidationValue(ValidationFiledsState.IsPasswordConfirm, undefined)
+      changeValidationValue(ValidationFieldsState.IsPasswordConfirm, undefined)
   }
 
   const validationRegisterEmail: ChangeEventHandler<HTMLInputElement> = (
@@ -215,10 +213,10 @@ const AuthPage: NextPage = () => {
     const currentValue = event.target.value
     const isValidEmail = validator.isEmail(currentValue)
 
-    changeValidationValue(ValidationFiledsState.IsEmailCorrect, isValidEmail)
+    changeValidationValue(ValidationFieldsState.IsEmailCorrect, isValidEmail)
 
     if (currentValue === '')
-      changeValidationValue(ValidationFiledsState.IsEmailCorrect, undefined)
+      changeValidationValue(ValidationFieldsState.IsEmailCorrect, undefined)
   }
 
   const showResponseMessage = (type: ResponseMessageType, message: string) => {
@@ -231,7 +229,7 @@ const AuthPage: NextPage = () => {
   }
 
   const closeResponseMessage = () => {
-    setResponseMessageState((state) => ({ ...state, isHideMessage: true }))
+    setResponseMessageState((state) => ({...state, isHideMessage: true}))
   }
 
   const toggleFormLogin = () => {
@@ -246,17 +244,17 @@ const AuthPage: NextPage = () => {
 
     const isInputsEmpty = !isLoginForm
       ? registerValueInput.confirmPassword === '' ||
-        registerValueInput.name === '' ||
-        globalValueInput.email === '' ||
-        globalValueInput.password === ''
+      registerValueInput.name === '' ||
+      globalValueInput.email === '' ||
+      globalValueInput.password === ''
       : globalValueInput.email === '' || globalValueInput.password === ''
 
     const isInputsNotValid = !isLoginForm
       ? !validationValue.isEmailCorrect ||
-        !validationValue.isPasswordConfirm ||
-        !requirementsPasswordState.isMinLenght ||
-        !requirementsPasswordState.isMinUppercase ||
-        !requirementsPasswordState.isMinNumbers
+      !validationValue.isPasswordConfirm ||
+      !requirementsPasswordState.isMinLenght ||
+      !requirementsPasswordState.isMinUppercase ||
+      !requirementsPasswordState.isMinNumbers
       : false
 
     if (isInputsEmpty) {
@@ -282,13 +280,13 @@ const AuthPage: NextPage = () => {
     const url = !isLoginForm ? '/api/auth/register' : '/api/auth/login'
 
     const body = !isLoginForm
-      ? { ...globalValueInput, ...registerValueInput }
+      ? {...globalValueInput, ...registerValueInput}
       : globalValueInput
 
     const response = await request<ResponseData>(url, {
       method: 'POST',
       body: JSON.stringify(body),
-      headers: { 'Content-Type': 'application/json' },
+      headers: {'Content-Type': 'application/json'},
     })
 
     if (!response.success) {
@@ -300,13 +298,17 @@ const AuthPage: NextPage = () => {
     showResponseMessage(ResponseMessageType.Success, response.message)
 
     setTimeout(() => {
-      if (!isLoginForm) {
-        closeResponseMessage()
-        setIsLoginForm(true)
-        passwordInputRef.current?.focus()
-      } else {
-        router.push('/user/home')
-      }
+      showResponseMessage(ResponseMessageType.Success, 'Переадрисация...')
+
+      setTimeout(() => {
+        if (!isLoginForm) {
+          closeResponseMessage()
+          setIsLoginForm(true)
+          passwordInputRef.current?.focus()
+        } else {
+          router.push('/user/home')
+        }
+      }, 1000)
     }, 1500)
   }
 
@@ -328,7 +330,7 @@ const AuthPage: NextPage = () => {
                     id='name'
                     placeholder='имя'
                     value={registerValueInput.name}
-                    disabled={isReguestInProcess}
+                    disabled={isRequestInProcess}
                     height='70px'
                     changeHandler={handlerChangeRegisterValue}
                     blurState={isLoginForm}
@@ -343,7 +345,7 @@ const AuthPage: NextPage = () => {
                     id='email'
                     placeholder='email'
                     value={globalValueInput.email}
-                    disabled={isReguestInProcess}
+                    disabled={isRequestInProcess}
                     height={
                       validationValue.isEmailCorrect !== undefined &&
                       !validationValue.isEmailCorrect
@@ -367,7 +369,7 @@ const AuthPage: NextPage = () => {
                     id='password'
                     placeholder={isLoginForm ? 'пароль' : 'новый пароль'}
                     value={globalValueInput.password}
-                    disabled={isReguestInProcess}
+                    disabled={isRequestInProcess}
                     inputRef={passwordInputRef}
                     height={
                       !isLoginForm && globalValueInput.password !== ''
@@ -379,7 +381,7 @@ const AuthPage: NextPage = () => {
                       handler: validationRegisterConfirmPassword,
                     }}
                     requirements={{
-                      handler: handlerRequirmentsPassword,
+                      handler: handlerRequirementsPassword,
                       list: requirementsPasswordList,
                       hideState: isLoginForm,
                     }}
@@ -395,7 +397,7 @@ const AuthPage: NextPage = () => {
                     id='confirmPassword'
                     placeholder='пароль'
                     value={registerValueInput.confirmPassword}
-                    disabled={isReguestInProcess}
+                    disabled={isRequestInProcess}
                     height={
                       !isLoginForm &&
                       validationValue.isPasswordConfirm !== undefined &&
@@ -408,7 +410,7 @@ const AuthPage: NextPage = () => {
                       handler: validationRegisterConfirmPassword,
                       state: validationValue.isPasswordConfirm,
                       message: !isLoginForm
-                        ? ValidationFormWarnings.ConfirmPasswodIsNotValid
+                        ? ValidationFormWarnings.ConfirmPasswordIsNotValid
                         : undefined,
                     }}
                     blurState={isLoginForm}
@@ -423,17 +425,17 @@ const AuthPage: NextPage = () => {
               closeResponseMessage={closeResponseMessage}
             />
             <div className={authFormControls}>
-              <button type='submit' disabled={isReguestInProcess}>
-                {isReguestInProcess
+              <button type='submit' disabled={isRequestInProcess}>
+                {isRequestInProcess
                   ? 'Отправляется...'
                   : isLoginForm
-                  ? 'Войти'
-                  : 'Зарегистрироваться'}
+                    ? 'Войти'
+                    : 'Зарегистрироваться'}
               </button>
               <button
                 type='button'
                 onClick={toggleFormLogin}
-                disabled={isReguestInProcess}
+                disabled={isRequestInProcess}
               >
                 {isLoginForm ? 'Регистрация' : 'Авторизация'}
               </button>
@@ -445,12 +447,12 @@ const AuthPage: NextPage = () => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+export const getServerSideProps: GetServerSideProps = async ({req, res}) => {
   const authTokenCookie = req.cookies[CookieType.Authorization]
   const _alreadyLoggedCookie = req.cookies[CookieType.AlreadyLogged]
 
   if (authTokenCookie && _alreadyLoggedCookie === undefined) {
-    setCookies(CookieType.AlreadyLogged, 1, { req, res })
+    setCookies(CookieType.AlreadyLogged, 1, {req, res})
 
     return {
       redirect: {
@@ -461,7 +463,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   }
 
   if (authTokenCookie === undefined && _alreadyLoggedCookie) {
-    removeCookies(CookieType.AlreadyLogged, { req, res })
+    removeCookies(CookieType.AlreadyLogged, {req, res})
   }
 
   return {

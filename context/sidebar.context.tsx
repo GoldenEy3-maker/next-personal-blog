@@ -5,13 +5,13 @@ import { createContext, useContext, useState } from 'react'
 const SidebarContext = createContext<TSidebarContext | null>(null)
 
 export const SidebarContextProvider = ({ children }: ChildrenProps) => {
-  const [isActive, setIsActive] = useState(false)
+  const [isSidebarActive, setIsActive] = useState(false)
 
-  const toggleActiveState = () => {
+  const toggleSidebarState = () => {
     setIsActive((prev) => !prev)
   }
 
-  const valueContext: TSidebarContext = { isActive, toggleActiveState }
+  const valueContext: TSidebarContext = { isSidebarActive, toggleSidebarState }
 
   return (
     <SidebarContext.Provider value={valueContext}>

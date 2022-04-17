@@ -1,19 +1,21 @@
-import { useCallback, useState } from 'react'
-import { GenericReguestFn } from '../typescript/interfaces'
+import type {GenericReguestFn} from '../typescript/interfaces'
+
+import {useCallback, useState} from 'react'
+
 
 export const useHttp = () => {
-  const [isReguestInProcess, setIsReguestInProcess] = useState<boolean>(false)
+  const [isRequestInProcess, setIsRequestInProcess] = useState<boolean>(false)
 
   const request: GenericReguestFn = useCallback(async (url, options) => {
-    setIsReguestInProcess(true)
+    setIsRequestInProcess(true)
     try {
       const response = await fetch(url, options)
       const responseData = await response.json()
 
-      setIsReguestInProcess(false)
+      setIsRequestInProcess(false)
       return responseData
     } catch (err: any) {
-      setIsReguestInProcess(false)
+      setIsRequestInProcess(false)
       return {
         success: false,
         data: null,
@@ -22,5 +24,5 @@ export const useHttp = () => {
     }
   }, [])
 
-  return { isReguestInProcess, request }
+  return {isRequestInProcess, request}
 }

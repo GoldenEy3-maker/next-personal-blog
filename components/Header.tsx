@@ -6,32 +6,44 @@ import { setDynamicClasses } from '../lib/functions'
 
 import styles from '../styles/modules/Header.module.scss'
 
+const {
+  header,
+  header__inner,
+  header__left,
+  burger,
+  _burgerActive,
+  burger__inner,
+  header__right,
+  headerSearchForm,
+  headerSearchForm__input,
+} = styles
+
 const Header = () => {
-  const { isActive, toggleActiveState } = useSidebarContext()
+  const { isSidebarActive, toggleSidebarState } = useSidebarContext()
 
   return (
-    <header className={styles.header}>
-      <div className={styles.header__inner}>
-        <div className={styles.header__left}>
+    <header className={header}>
+      <div className={header__inner}>
+        <div className={header__left}>
           <Navigation />
           <div
             className={setDynamicClasses({
-              staticClasses: [styles.burger],
-              dynamicClasses: [[styles.__burgerActive]],
-              conditions: [isActive],
+              staticClasses: [burger],
+              dynamicClasses: [[_burgerActive]],
+              conditions: [isSidebarActive],
             })}
-            onClick={toggleActiveState}
+            onClick={toggleSidebarState}
           >
-            <div className={styles.burger__inner}>
+            <div className={burger__inner}>
               <span></span>
             </div>
           </div>
         </div>
-        <div className={styles.header__right}>
-          <form className={styles.headerSearchForm}>
+        <div className={header__right}>
+          <form className={headerSearchForm}>
             <input
               type='text'
-              className={styles.headerSearchForm__input}
+              className={headerSearchForm__input}
               placeholder='Поиск по блогу'
             />
           </form>

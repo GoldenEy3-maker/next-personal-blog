@@ -12,8 +12,8 @@ export type ChildrenProps = {
 }
 
 export type TSidebarContext = {
-  isActive: boolean
-  toggleActiveState: () => void
+  isSidebarActive: boolean
+  toggleSidebarState: () => void
 }
 
 export type ResponseData<DataType = null> = {

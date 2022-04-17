@@ -2,13 +2,18 @@ import type { GetServerSideProps, NextPage } from 'next'
 import { CookieType } from '../../typescript/enums'
 
 import MainLayout from '../../components/MainLayout'
+import Stories from '../../components/Stories'
 
 import jwt from 'jsonwebtoken'
 
 const HomePage: NextPage = () => {
   return (
     <MainLayout>
-      <div className='home __container'></div>
+      <div className='home'>
+        <div className='home__inner'>
+          <Stories />
+        </div>
+      </div>
     </MainLayout>
   )
 }

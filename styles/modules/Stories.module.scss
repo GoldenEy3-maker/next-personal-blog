@@ -1,0 +1,58 @@
+.stories {
+  &__inner {
+    overflow: hidden;
+  }
+
+  &__list {
+    display: flex;
+    align-items: center;
+
+    gap: 25px;
+
+    transition-property: transform;
+    transition-timing-function: ease;
+  }
+}
+
+.storiesItem {
+  user-select: none;
+
+  position: relative;
+
+  cursor: pointer;
+
+  flex: 0 0 280px;
+  height: 400px;
+
+  overflow: hidden;
+
+  border-radius: 10px;
+
+  &__preview {
+    transform: scale(1);
+    transition: transform 2s ease;
+  }
+
+  &:hover {
+    .storiesItem__preview {
+      transform: scale(1.15);
+    }
+  }
+
+  &__text {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+
+    font-size: 22px;
+    line-height: 26px;
+  }
+
+  &__date {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+
+    font-size: 18px;
+  }
+}

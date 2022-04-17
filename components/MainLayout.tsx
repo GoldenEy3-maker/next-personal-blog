@@ -22,7 +22,9 @@ const MainLayout = ({ children }: ChildrenProps) => {
             <Header />
           </SidebarContextProvider>
         </WindowContextProvider>
-        <main className='page-content'>{children}</main>
+        <main className='page-content'>
+          <div className='page-content__inner _container'>{children}</div>
+        </main>
       </div>
     </>
   )

@@ -58,3 +58,11 @@ export const isStrongPassword: IsStrongPassword = (password, options) => {
 
   return boo
 }
+
+export const setCurrentDatetime = (date: string): string => {
+  const dateArray = date.split('.')
+
+  const reversedDateArray = dateArray.reverse()
+
+  return reversedDateArray.join('-')
+}

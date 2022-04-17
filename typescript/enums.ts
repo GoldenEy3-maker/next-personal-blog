@@ -1,3 +1,8 @@
+export enum RoutePaths {
+  HomePage = '/user/home',
+  ProfilePage = '/user/profile',
+}
+
 export enum ResponseMessageType {
   Success = 'success',
   Warning = 'warning',
@@ -13,7 +18,7 @@ export enum ValidationFormWarnings {
   EmptyValues = 'Заполните все поля!',
   NotValid = 'Данные заполнены некоректно!',
   EmailIsNotCorrect = 'Введен некоректный email',
-  ConfirmPasswodIsNotValid = 'Пароли не совпадают',
+  ConfirmPasswordIsNotValid = 'Пароли не совпадают',
 }
 
 export enum EndpointMessages {
