@@ -139,7 +139,7 @@ const Navigation = () => {
       <div className={nav__flexContainer}>
         <ul className={nav__list}>
           <li className={nav__item}>
-            <Link href='/user/profile'>
+            <Link href={RoutePaths.ProfilePage}>
               <a>Профиль</a>
             </Link>
           </li>

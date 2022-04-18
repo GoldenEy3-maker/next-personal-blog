@@ -1,19 +1,14 @@
 import type { GetServerSideProps, NextPage } from 'next'
-import { CookieType } from '../../typescript/enums'
+import { CookieType, RoutePaths } from '../typescript/enums'
 
-import MainLayout from '../../components/MainLayout'
-import Stories from '../../components/Stories'
+import MainLayout from '../components/MainLayout'
 
 import jwt from 'jsonwebtoken'
 
-const HomePage: NextPage = () => {
+const ProfilePage: NextPage = () => {
   return (
     <MainLayout>
-      <div className='home'>
-        <div className='home__inner'>
-          <Stories />
-        </div>
-      </div>
+      <h1>ProfilePage</h1>
     </MainLayout>
   )
 }
@@ -24,7 +19,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   if (authTokenCookie === undefined) {
     return {
       redirect: {
-        destination: '/',
+        destination: RoutePaths.AuthPage,
         permanent: false,
       },
     }
@@ -35,7 +30,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   if (!jwtSecretKey) {
     return {
       redirect: {
-        destination: '/',
+        destination: RoutePaths.AuthPage,
         permanent: false,
       },
     }
@@ -48,7 +43,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   if (!isValidToken) {
     return {
       redirect: {
-        destination: '/',
+        destination: RoutePaths.AuthPage,
         permanent: false,
       },
     }
@@ -56,4 +51,4 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   return { props: {} }
 }
 
-export default HomePage
+export default ProfilePage

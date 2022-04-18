@@ -4,7 +4,7 @@
   position: fixed;
   top: 0;
   left: 0;
-
+  z-index: 9;
   height: 100vh;
 
   background-color: var(--primary-color-hsl);
@@ -17,6 +17,7 @@
     position: fixed;
     top: 0;
     left: 0;
+    z-index: 9;
 
     width: 100vw;
     height: 100vh;

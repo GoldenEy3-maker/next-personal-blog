@@ -1,6 +1,7 @@
 export enum RoutePaths {
-  HomePage = '/user/home',
-  ProfilePage = '/user/profile',
+  HomePage = '/',
+  ProfilePage = '/profile',
+  AuthPage = '/auth',
 }
 
 export enum ResponseMessageType {

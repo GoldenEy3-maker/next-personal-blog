@@ -1,10 +1,9 @@
-import type {MouseEventHandler, TouchEventHandler} from 'react'
+import { MouseEventHandler, TouchEventHandler, useEffect } from 'react'
 
 import Image from 'next/image'
-import {useState, useCallback, useRef} from 'react'
-// import { Swiper, SwiperSlide } from 'swiper/react'
+import { useState, useCallback, useRef } from 'react'
 
-import {setCurrentDatetime} from '../lib/functions'
+import { setCurrentDatetime } from '../lib/functions'
 
 // import 'swiper/css'
 import styles from '../styles/modules/Stories.module.scss'
@@ -17,313 +16,326 @@ import Stories4 from '../public/images/stories4.jpg'
 const {
   stories,
   stories__inner,
+  stories__track,
   stories__list,
   storiesItem,
   storiesItem__preview,
   storiesItem__text,
   storiesItem__date,
+  stories__control,
 } = styles
-
-interface GetNewOffsetX {
-  <EventType>(event: EventType): number
-}
 
 const Stories = () => {
   const [isListDragging, setIsListDragging] = useState(false)
   const [offsetX, setOffsetX] = useState(0)
   const [slideIndex, setSlideIndex] = useState(0)
+  const [currentListLenght, setCurrentListLenght] = useState(0)
 
   const startXRef = useRef(0)
   const currentOffsetXRef = useRef(0)
 
+  const storiesTrackRef = useRef<HTMLDivElement | null>(null)
+
   const slideGap = 25
   const slideWidth = 280 + slideGap
-  const positionThreshold = slideWidth * 0.35
-  const listLenght = 10
-  const slidersPerView = 4
-  const currentListLenght = listLenght - slidersPerView
+  const listLenght = 8
 
-
-  const getNewMouseOffsetX = useCallback((event: MouseEvent) => {
-    return currentOffsetXRef.current - (startXRef.current - event.clientX)
-  }, [])
-
-  const getNewTouchOffsetX = useCallback((event: TouchEvent) => {
-    return currentOffsetXRef.current - (startXRef.current - event.touches[0].clientX)
-  }, [])
-
-  const swipeMouseAction = useCallback((event: MouseEvent) => {
-    const newOffsetX = getNewMouseOffsetX(event)
-
-    setOffsetX(newOffsetX)
-  }, [getNewMouseOffsetX])
-
-
-  const swipeMouseEnd = useCallback((event: MouseEvent) => {
-    setIsListDragging(false)
-
-    const newOffsetX = getNewMouseOffsetX(event)
-
-    let newSlideIndex = Math.round(-newOffsetX / slideWidth)
-
-    if (newSlideIndex > currentListLenght) newSlideIndex = currentListLenght
-    if (newSlideIndex < 0) newSlideIndex = 0
-
-    setSlideIndex(newSlideIndex)
-
-    setOffsetX(-(newSlideIndex * slideWidth))
-
-    document.removeEventListener('mousemove', swipeMouseAction)
-    document.removeEventListener('mouseup', swipeMouseEnd)
-  }, [currentListLenght, slideWidth, swipeMouseAction, getNewMouseOffsetX])
-
-  const swipeMouseStart: MouseEventHandler = (event) => {
-    setIsListDragging(true)
-
-    currentOffsetXRef.current = offsetX
-    startXRef.current = event.clientX
-
-    document.addEventListener('mousemove', swipeMouseAction)
-    document.addEventListener('mouseup', swipeMouseEnd)
+  const getCurrentEvent = (event: MouseEvent | TouchEvent) => {
+    // @ts-ignore
+    return event.type.includes('touch') ? event.changedTouches[0] : event
   }
 
-  const swipeTouchAction = useCallback((event: TouchEvent) => {
-    const diff = startXRef.current - event.touches[0].clientX
-    const newOffsetX = currentOffsetXRef.current - diff
+  const getNewOffsetX = useCallback((event: MouseEvent | TouchEvent) => {
+    const evt = getCurrentEvent(event)
 
-    setOffsetX(newOffsetX)
+    return currentOffsetXRef.current - (startXRef.current - evt.clientX)
   }, [])
 
-  const swipeTouchEnd = useCallback((event: TouchEvent) => {
-    setIsListDragging(false)
+  const getNewIndexSlide = useCallback(
+    (offsetX: number): number => {
+      let index = Math.round(-offsetX / slideWidth)
 
-    const diff = startXRef.current - event.changedTouches[0].clientX
-    const newOffsetX = currentOffsetXRef.current - diff
+      if (index > currentListLenght) index = currentListLenght
+      if (index < 0) index = 0
 
-    let newSlideIndex = Math.round(-newOffsetX / slideWidth)
+      return index
+    },
+    [currentListLenght, slideWidth]
+  )
 
-    if (newSlideIndex > currentListLenght) newSlideIndex = currentListLenght
-    if (newSlideIndex < 0) newSlideIndex = 0
+  const swipeAction = useCallback(
+    (event: MouseEvent | TouchEvent) => {
+      const newOffsetX = getNewOffsetX(event)
 
-    setSlideIndex(newSlideIndex)
+      setOffsetX(newOffsetX)
+    },
+    [getNewOffsetX]
+  )
 
-    setOffsetX(-(newSlideIndex * slideWidth))
+  const swipeEnd = useCallback(
+    (event: MouseEvent | TouchEvent) => {
+      setIsListDragging(false)
 
-    document.removeEventListener('touchmove', swipeTouchAction)
-    document.removeEventListener('touchend', swipeTouchEnd)
-  }, [swipeTouchAction, currentListLenght, slideWidth])
+      const newOffsetX = getNewOffsetX(event)
 
-  const swipeTouchStart: TouchEventHandler = (event) => {
+      const newSlideIndex = getNewIndexSlide(newOffsetX)
+
+      setSlideIndex(newSlideIndex)
+
+      setOffsetX(-(newSlideIndex * slideWidth))
+
+      document.removeEventListener('mousemove', swipeAction)
+      document.removeEventListener('mouseup', swipeEnd)
+      document.removeEventListener('touchmove', swipeAction)
+      document.removeEventListener('touchend', swipeEnd)
+    },
+    [slideWidth, getNewOffsetX, getNewIndexSlide, swipeAction]
+  )
+
+  // @ts-ignore
+  const swipeMouseStart: MouseEventHandler | TouchEventHandler = (event) => {
     setIsListDragging(true)
 
-    currentOffsetXRef.current = offsetX
-    startXRef.current = event.touches[0].clientX
+    const evt = getCurrentEvent(event)
 
-    document.addEventListener('touchmove', swipeTouchAction)
-    document.addEventListener('touchend', swipeTouchEnd)
+    currentOffsetXRef.current = offsetX
+    startXRef.current = evt.clientX
+
+    document.addEventListener('mousemove', swipeAction)
+    document.addEventListener('mouseup', swipeEnd)
+    document.addEventListener('touchmove', swipeAction)
+    document.addEventListener('touchend', swipeEnd)
   }
 
-  const nextSlide: MouseEventHandler = (event) => {
+  const nextSlide = () => {
     setOffsetX(-(slideIndex + 1) * slideWidth)
 
-    setSlideIndex(index => ++index)
+    setSlideIndex((index) => ++index)
   }
 
-  const prevSlide: MouseEventHandler<HTMLButtonElement> = (event) => {
-
+  const prevSlide = () => {
     setOffsetX(-(slideIndex - 1) * slideWidth)
 
-    setSlideIndex(index => --index)
+    setSlideIndex((index) => --index)
   }
 
+  const changeSliderTrackSizeHandler = useCallback(() => {
+    if (storiesTrackRef.current) {
+      const currentIndex = Number(
+        (storiesTrackRef.current.offsetWidth / slideWidth).toFixed(2)
+      )
+      const indexThresholdGap = 0.04
+      let roundedIndex = Math.round(currentIndex)
+
+      if (currentIndex + indexThresholdGap > roundedIndex) {
+        roundedIndex++
+      }
+
+      const threshold = Math.abs(
+        roundedIndex * slideWidth - storiesTrackRef.current.offsetWidth
+      )
+
+      let currentLenght = listLenght - roundedIndex
+
+      if (threshold > slideGap) {
+        currentLenght++
+      }
+
+      setCurrentListLenght(currentLenght)
+    }
+  }, [slideWidth])
+
+  useEffect(() => {
+    changeSliderTrackSizeHandler()
+
+    window.addEventListener('resize', changeSliderTrackSizeHandler)
+
+    return () =>
+      window.removeEventListener('resize', changeSliderTrackSizeHandler)
+  }, [changeSliderTrackSizeHandler])
 
   return (
     <div className={stories}>
-      <div className={stories__inner}
-           onMouseDown={swipeMouseStart}
-           onTouchStart={swipeTouchStart}
-      >
-        <ul
-          className={stories__list}
-          style={{
-            transform: `translateX(${offsetX}px)`,
-            transitionDuration: !isListDragging ? '400ms' : '0ms',
-          }}
+      <div className={stories__inner}>
+        <div
+          className={stories__track}
+          ref={storiesTrackRef}
+          // @ts-ignore
+          onMouseDown={swipeMouseStart}
+          // @ts-ignore
+          onTouchStart={swipeMouseStart}
         >
-          <li className={storiesItem}>
-            <div className={storiesItem__preview}>
-              <Image
-                src={Stories2}
-                alt='storie preview picture'
-                layout='responsive'
-                priority
-                draggable={false}
-              />
-            </div>
-            <div className={storiesItem__text}>Заканчиваю сложный проект</div>
-            <div className={storiesItem__date}>
-              <time dateTime={setCurrentDatetime('15.09.2020')}>
-                15.09.2020
-              </time>
-            </div>
-          </li>
-          <li className={storiesItem}>
-            <div className={storiesItem__preview}>
-              <Image
-                src={Stories2}
-                alt='storie preview picture'
-                layout='responsive'
-                priority
-                draggable={false}
-              />
-            </div>
-            <div className={storiesItem__text}>Заканчиваю сложный проект</div>
-            <div className={storiesItem__date}>
-              <time dateTime={setCurrentDatetime('15.09.2020')}>
-                15.09.2020
-              </time>
-            </div>
-          </li>
-          <li className={storiesItem}>
-            <div className={storiesItem__preview}>
-              <Image
-                src={Stories2}
-                alt='storie preview picture'
-                layout='responsive'
-                priority
-                draggable={false}
-              />
-            </div>
-            <div className={storiesItem__text}>Заканчиваю сложный проект</div>
-            <div className={storiesItem__date}>
-              <time dateTime={setCurrentDatetime('15.09.2020')}>
-                15.09.2020
-              </time>
-            </div>
-          </li>
-          <li className={storiesItem}>
-            <div className={storiesItem__preview}>
-              <Image
-                src={Stories2}
-                alt='storie preview picture'
-                layout='responsive'
-                priority
-                draggable={false}
-              />
-            </div>
-            <div className={storiesItem__text}>Заканчиваю сложный проект</div>
-            <div className={storiesItem__date}>
-              <time dateTime={setCurrentDatetime('15.09.2020')}>
-                15.09.2020
-              </time>
-            </div>
-          </li>
-          <li className={storiesItem}>
-            <div className={storiesItem__preview}>
-              <Image
-                src={Stories2}
-                alt='storie preview picture'
-                layout='responsive'
-                priority
-                draggable={false}
-              />
-            </div>
-            <div className={storiesItem__text}>Заканчиваю сложный проект</div>
-            <div className={storiesItem__date}>
-              <time dateTime={setCurrentDatetime('15.09.2020')}>
-                15.09.2020
-              </time>
-            </div>
-          </li>
-          <li className={storiesItem}>
-            <div className={storiesItem__preview}>
-              <Image
-                src={Stories2}
-                alt='storie preview picture'
-                layout='responsive'
-                priority
-                draggable={false}
-              />
-            </div>
-            <div className={storiesItem__text}>Заканчиваю сложный проект</div>
-            <div className={storiesItem__date}>
-              <time dateTime={setCurrentDatetime('15.09.2020')}>
-                15.09.2020
-              </time>
-            </div>
-          </li>
-          <li className={storiesItem}>
-            <div className={storiesItem__preview}>
-              <Image
-                src={Stories2}
-                alt='storie preview picture'
-                layout='responsive'
-                priority
-                draggable={false}
-              />
-            </div>
-            <div className={storiesItem__text}>Заканчиваю сложный проект</div>
-            <div className={storiesItem__date}>
-              <time dateTime={setCurrentDatetime('15.09.2020')}>
-                15.09.2020
-              </time>
-            </div>
-          </li>
-          <li className={storiesItem}>
-            <div className={storiesItem__preview}>
-              <Image
-                src={Stories3}
-                alt='storie preview picture'
-                layout='responsive'
-                priority
-                draggable={false}
-              />
-            </div>
-            <div className={storiesItem__text}>Переехал в новую квартиру</div>
-            <div className={storiesItem__date}>
-              <time dateTime={setCurrentDatetime('11.09.2020')}>
-                11.09.2020
-              </time>
-            </div>
-          </li>
-          <li className={storiesItem}>
-            <div className={storiesItem__preview}>
-              <Image
-                src={Stories4}
-                alt='storie preview picture'
-                layout='responsive'
-                priority
-                draggable={false}
-              />
-            </div>
-            <div className={storiesItem__text}>Осень пришла!</div>
-            <div className={storiesItem__date}>
-              <time dateTime={setCurrentDatetime('28.08.2020')}>
-                28.08.2020
-              </time>
-            </div>
-          </li>
-          <li className={storiesItem}>
-            <div className={storiesItem__preview}>
-              <Image
-                src={Stories4}
-                alt='storie preview picture'
-                layout='responsive'
-                priority
-                draggable={false}
-              />
-            </div>
-            <div className={storiesItem__text}>Осень пришла!</div>
-            <div className={storiesItem__date}>
-              <time dateTime={setCurrentDatetime('28.08.2020')}>
-                28.08.2020
-              </time>
-            </div>
-          </li>
-        </ul>
-        <div className="stories__control">
-          <button type={'button'} onClick={prevSlide} disabled={slideIndex <= 0}>Назад</button>
-          <button type={'button'} onClick={nextSlide} disabled={slideIndex >= currentListLenght}>Вперед</button>
+          <ul
+            className={stories__list}
+            style={{
+              transform: `translateX(${offsetX}px)`,
+              transitionDuration: !isListDragging ? '400ms' : '0ms',
+            }}
+          >
+            <li className={storiesItem}>
+              <div className={storiesItem__preview}>
+                <Image
+                  src={Stories1}
+                  alt='storie preview picture'
+                  layout='responsive'
+                  priority
+                  draggable={false}
+                />
+              </div>
+              <div className={storiesItem__text}>Отдыхаю на природе</div>
+              <div className={storiesItem__date}>
+                <time dateTime={setCurrentDatetime('21.09.2020')}>
+                  21.09.2020
+                </time>
+              </div>
+            </li>
+            <li className={storiesItem}>
+              <div className={storiesItem__preview}>
+                <Image
+                  src={Stories2}
+                  alt='storie preview picture'
+                  layout='responsive'
+                  priority
+                  draggable={false}
+                />
+              </div>
+              <div className={storiesItem__text}>Заканчиваю сложный проект</div>
+              <div className={storiesItem__date}>
+                <time dateTime={setCurrentDatetime('15.09.2020')}>
+                  15.09.2020
+                </time>
+              </div>
+            </li>
+            <li className={storiesItem}>
+              <div className={storiesItem__preview}>
+                <Image
+                  src={Stories3}
+                  alt='storie preview picture'
+                  layout='responsive'
+                  priority
+                  draggable={false}
+                />
+              </div>
+              <div className={storiesItem__text}>Переехал в новую квартиру</div>
+              <div className={storiesItem__date}>
+                <time dateTime={setCurrentDatetime('11.09.2020')}>
+                  11.09.2020
+                </time>
+              </div>
+            </li>
+            <li className={storiesItem}>
+              <div className={storiesItem__preview}>
+                <Image
+                  src={Stories4}
+                  alt='storie preview picture'
+                  layout='responsive'
+                  priority
+                  draggable={false}
+                />
+              </div>
+              <div className={storiesItem__text}>Осень пришла!</div>
+              <div className={storiesItem__date}>
+                <time dateTime={setCurrentDatetime('28.08.2020')}>
+                  28.08.2020
+                </time>
+              </div>
+            </li>
+            <li className={storiesItem}>
+              <div className={storiesItem__preview}>
+                <Image
+                  src={Stories1}
+                  alt='storie preview picture'
+                  layout='responsive'
+                  priority
+                  draggable={false}
+                />
+              </div>
+              <div className={storiesItem__text}>Отдыхаю на природе</div>
+              <div className={storiesItem__date}>
+                <time dateTime={setCurrentDatetime('21.09.2020')}>
+                  21.09.2020
+                </time>
+              </div>
+            </li>
+            <li className={storiesItem}>
+              <div className={storiesItem__preview}>
+                <Image
+                  src={Stories2}
+                  alt='storie preview picture'
+                  layout='responsive'
+                  priority
+                  draggable={false}
+                />
+              </div>
+              <div className={storiesItem__text}>Заканчиваю сложный проект</div>
+              <div className={storiesItem__date}>
+                <time dateTime={setCurrentDatetime('15.09.2020')}>
+                  15.09.2020
+                </time>
+              </div>
+            </li>
+            <li className={storiesItem}>
+              <div className={storiesItem__preview}>
+                <Image
+                  src={Stories3}
+                  alt='storie preview picture'
+                  layout='responsive'
+                  priority
+                  draggable={false}
+                />
+              </div>
+              <div className={storiesItem__text}>Переехал в новую квартиру</div>
+              <div className={storiesItem__date}>
+                <time dateTime={setCurrentDatetime('11.09.2020')}>
+                  11.09.2020
+                </time>
+              </div>
+            </li>
+            <li className={storiesItem}>
+              <div className={storiesItem__preview}>
+                <Image
+                  src={Stories4}
+                  alt='storie preview picture'
+                  layout='responsive'
+                  priority
+                  draggable={false}
+                />
+              </div>
+              <div className={storiesItem__text}>Осень пришла!</div>
+              <div className={storiesItem__date}>
+                <time dateTime={setCurrentDatetime('28.08.2020')}>
+                  28.08.2020
+                </time>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div className={stories__control}>
+          <button
+            type={'button'}
+            onClick={prevSlide}
+            disabled={slideIndex <= 0}
+          >
+            <svg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'>
+              <title />
+              <g data-name='Layer 2' id='Layer_2'>
+                <path d='M10.1,23a1,1,0,0,0,0-1.41L5.5,17H29.05a1,1,0,0,0,0-2H5.53l4.57-4.57A1,1,0,0,0,8.68,9L2.32,15.37a.9.9,0,0,0,0,1.27L8.68,23A1,1,0,0,0,10.1,23Z' />
+              </g>
+            </svg>
+          </button>
+          <button
+            type={'button'}
+            onClick={nextSlide}
+            disabled={slideIndex >= currentListLenght}
+          >
+            <svg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'>
+              <title />
+              <g data-name='Layer 2' id='Layer_2'>
+                <path d='M10.1,23a1,1,0,0,0,0-1.41L5.5,17H29.05a1,1,0,0,0,0-2H5.53l4.57-4.57A1,1,0,0,0,8.68,9L2.32,15.37a.9.9,0,0,0,0,1.27L8.68,23A1,1,0,0,0,10.1,23Z' />
+              </g>
+            </svg>
+          </button>
         </div>
       </div>
     </div>

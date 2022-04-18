@@ -48,7 +48,7 @@ a {
 }
 
 .page-content {
-  margin-top: 80px;
+  margin-top: adaptive-value(80, 60);
   padding-left: var(--sidebar-width);
 
   @media (max-width: 991.98px) {

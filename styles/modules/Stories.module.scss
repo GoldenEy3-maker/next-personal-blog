@@ -1,3 +1,5 @@
+@import '../functions.scss';
+
 .stories {
   &__inner {
     overflow: hidden;
@@ -11,6 +13,52 @@
 
     transition-property: transform;
     transition-timing-function: ease;
+  }
+
+  &__control {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-top: adaptive-value(20, 10, 991.98);
+
+    > button {
+      cursor: pointer;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      width: adaptive-value(60, 50, 991.98);
+      height: adaptive-value(40, 30, 991.98);
+
+      background-color: transparent;
+
+      border-radius: 10px;
+      border: none;
+
+      svg {
+        fill: var(--white-hsl);
+
+        transition: fill 0.2s ease;
+      }
+
+      &:disabled {
+        svg {
+          fill: hsl(var(--base-white), 60%);
+        }
+      }
+
+      &:last-child {
+        svg {
+          transform: rotate(180deg);
+        }
+      }
+    }
+
+    @media (max-width: 991.98px) {
+      display: none;
+    }
   }
 }
 
@@ -33,9 +81,11 @@
     transition: transform 2s ease;
   }
 
-  &:hover {
-    .storiesItem__preview {
-      transform: scale(1.15);
+  @media screen and (min-width: 991.98px) {
+    &:hover {
+      .storiesItem__preview {
+        transform: scale(1.15);
+      }
     }
   }
 
