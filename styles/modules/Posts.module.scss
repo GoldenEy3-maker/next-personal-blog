@@ -1,0 +1,170 @@
+.posts {
+  margin-bottom: 30px;
+
+  &__inner {
+  }
+}
+
+.postsItem {
+  margin-bottom: 60px;
+
+  border-radius: 5px;
+
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.35);
+
+  background-color: var(--primary-color-hsl);
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &__attach {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+
+    overflow: hidden;
+  }
+
+
+  &__info {
+    padding: 30px 50px;
+  }
+
+  &__title {
+    font-weight: 500;
+    font-size: 30px;
+
+    margin-bottom: 30px;
+  }
+
+  &__text {
+    font-size: 20px;
+    line-height: 28px;
+  }
+}
+
+.postsItemControls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 50px 30px;
+
+  &__button {
+    --blue-font-color-hsl: hsl(var(--base-primary-blue), 60%);
+
+    cursor: pointer;
+
+    padding: 10px 15px;
+
+    border-radius: 5px;
+
+    transition: background-color .2s ease;
+
+    a {
+      position: relative;
+
+      font-size: 20px;
+
+      color: var(--blue-font-color-hsl);
+
+      transition: color .2s ease;
+
+      &:after {
+        content: '';
+
+        position: absolute;
+        bottom: 0;
+        left: 0;
+
+        width: 100%;
+        height: 1px;
+
+        background-color: var(--white-hsl);
+
+        transform: scale(0);
+
+        transition: transform .2s ease;
+      }
+    }
+
+    @media screen and (min-width: 991.98px) {
+      &:hover {
+        background-color: var(--primary-blue-hsl);
+
+        a {
+          color: var(--white-hsl);
+
+          &:after {
+            transform: scale(1);
+          }
+        }
+      }
+
+    }
+  }
+}
+
+.postsItemControlsExtrainfo {
+  font-size: 18px;
+
+  color: var(--secondary-font-color-hsl);
+
+
+  &__time {
+    &:not(:last-child) {
+      margin-right: 15px;
+
+      &:after {
+        content: '';
+
+        display: inline-block;
+
+        width: 6px;
+        height: 6px;
+
+        margin-bottom: 2px;
+        margin-left: 15px;
+
+        border-radius: 100%;
+
+        background-color: var(--white-hsl);
+      }
+    }
+  }
+
+  &__tag {
+    position: relative;
+
+    cursor: pointer;
+
+    transition: color .2s ease;
+
+    &:after {
+      content: '';
+
+      position: absolute;
+      bottom: 0;
+      left: 0;
+
+      width: 100%;
+      height: 1px;
+
+      background-color: var(--white-hsl);
+
+      transform: scale(0);
+
+      transition: transform .2s ease;
+    }
+
+    @media screen and (min-width: 991.98px) {
+      &:hover {
+        color: var(--white-hsl);
+
+        &:after {
+          transform: scale(1);
+        }
+      }
+    }
+  }
+}

@@ -1,5 +1,5 @@
-import type { ChangeEventHandler, ReactNode } from 'react'
-import { ResponseMessageType } from './enums'
+import type {ChangeEventHandler, ReactNode} from 'react'
+import {ResponseMessageType} from './enums'
 
 export type ChildrenProps = {
   children:
@@ -88,3 +88,4 @@ export type ResponseMessageProps = {
   isHideMessage: boolean
   closeResponseMessage: () => void
 }
+

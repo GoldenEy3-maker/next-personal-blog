@@ -1,10 +1,9 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
+import type {NextApiRequest, NextApiResponse} from 'next'
 import type {
   FormInputProps,
   ResponseMessageProps,
   StrongPasswordOptions,
 } from './types'
-
 
 
 export interface SetStaticClasses {
@@ -46,5 +45,14 @@ export interface FormInputComponent {
 }
 
 export interface ResponseMessageComponent {
-  (porops: ResponseMessageProps): JSX.Element
+  (props: ResponseMessageProps): JSX.Element
+}
+
+export interface PostsList {
+  id: number
+  image: StaticImageData
+  title: string
+  text: string
+  date: string
+  tag: string
 }

@@ -1,26 +1,50 @@
-import type { GetServerSideProps, NextPage } from 'next'
-import { CookieType, RoutePaths } from '../typescript/enums'
+import type {GetServerSideProps, NextPage} from 'next'
+import type {PostsList} from "../typescript/interfaces";
+import {CookieType, RoutePaths} from '../typescript/enums'
 
 import MainLayout from '../components/MainLayout'
 import Stories from '../components/Stories'
 import AddPost from '../components/AddPost'
+import Posts from "../components/Posts";
 
 import jwt from 'jsonwebtoken'
+
+import Post1 from '../public/images/post1.jpg'
+
+
+const postsList: PostsList[] = [
+  {
+    id: 1,
+    image: Post1,
+    title: 'Как писать код быстро и безболезненно?',
+    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elementum volutpat orci turpis urna. Et vestibulum, posuere tortor lacinia sit. Sagittis porttitor orci auctor in at tincidunt arcu egestas. Fusce arcu sodales lacinia eu auctor nunc nam id. Diam sit sed volutpat massa. Egestas ornare vel volutpat.',
+    date: '21.06.2020',
+    tag: 'создание сайтов'
+  }, {
+    id: 2,
+    image: Post1,
+    title: 'Как писать код быстро и безболезненно?',
+    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elementum volutpat orci turpis urna. Et vestibulum, posuere tortor lacinia sit. Sagittis porttitor orci auctor in at tincidunt arcu egestas. Fusce arcu sodales lacinia eu auctor nunc nam id. Diam sit sed volutpat massa. Egestas ornare vel volutpat.',
+    date: '21.06.2020',
+    tag: 'создание сайтов'
+  }
+]
 
 const HomePage: NextPage = () => {
   return (
     <MainLayout>
       <div className='home'>
         <div className='home__inner'>
-          <Stories />
-          <AddPost />
+          <Stories/>
+          <AddPost/>
+          <Posts postsList={postsList}/>
         </div>
       </div>
     </MainLayout>
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+export const getServerSideProps: GetServerSideProps = async ({req}) => {
   const authTokenCookie = req.cookies[CookieType.Authorization]
 
   if (authTokenCookie === undefined) {
@@ -43,7 +67,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
     }
   }
 
-  const { token } = JSON.parse(authTokenCookie)
+  const {token} = JSON.parse(authTokenCookie)
 
   const isValidToken = jwt.verify(token, jwtSecretKey)
 
@@ -55,7 +79,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
       },
     }
   }
-  return { props: {} }
+  return {props: {}}
 }
 
 export default HomePage

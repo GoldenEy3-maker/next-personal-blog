@@ -5,7 +5,7 @@ import {
   useRef,
   useState,
 } from 'react'
-import { setDynamicClasses } from '../lib/functions'
+import {setDynamicClasses} from '../lib/functions'
 
 import styles from '../styles/modules/AddPost.module.scss'
 
@@ -82,7 +82,7 @@ const AddPost = () => {
               onFocus={focusHandlerTextarea}
               onBlur={blurHandlerTextarea}
               onChange={changeTextareaValueHandler}
-            ></textarea>
+            />
             <span>Напишите что-нибудь</span>
           </div>
           <div className={addPostFormControls}>

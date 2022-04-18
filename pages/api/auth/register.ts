@@ -1,7 +1,7 @@
-import { isStrongPassword } from './../../../lib/functions'
-import type { ResponseData } from './../../../typescript/types'
-import type { Endpoint } from '../../../typescript/interfaces'
-import { EndpointMessages } from '../../../typescript/enums'
+import {isStrongPassword} from '../../../lib/functions'
+import type {ResponseData} from '../../../typescript/types'
+import type {Endpoint} from '../../../typescript/interfaces'
+import {EndpointMessages} from '../../../typescript/enums'
 
 import dbConnect from '../../../database/connection'
 import UserModel from '../../../database/models/User.model'
@@ -13,13 +13,13 @@ const handler: Endpoint<ResponseData> = async (req, res) => {
   try {
     await dbConnect()
 
-    const { body } = req
+    const {body} = req
 
-    const { name, email, password, confirmPassword } = body
+    const {name, email, password, confirmPassword} = body
 
-    const isAlredyExistUser = await UserModel.findOne({ email })
+    const isAlreadyExistUser = await UserModel.findOne({email})
 
-    if (isAlredyExistUser) {
+    if (isAlreadyExistUser) {
       throw new Error(EndpointMessages.AlreadyExistUser)
     }
 
@@ -28,7 +28,7 @@ const handler: Endpoint<ResponseData> = async (req, res) => {
     const isPasswordMinLenght = isStrongPassword(password, {
       minLenght: 6,
     })
-    const isPasswrodMinNumbers = isStrongPassword(password, {
+    const isPasswordMinNumbers = isStrongPassword(password, {
       minNumbers: 1,
     })
     const isPasswordUppercase = isStrongPassword(password, {
@@ -37,7 +37,7 @@ const handler: Endpoint<ResponseData> = async (req, res) => {
 
     const isPasswordValid =
       isPasswordMinLenght &&
-      isPasswrodMinNumbers &&
+      isPasswordMinNumbers &&
       isPasswordUppercase &&
       password === confirmPassword
 
@@ -49,7 +49,7 @@ const handler: Endpoint<ResponseData> = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 12)
 
-    const newUser = new UserModel({ name, email, password: hashedPassword })
+    const newUser = new UserModel({name, email, password: hashedPassword})
 
     await newUser.save()
 

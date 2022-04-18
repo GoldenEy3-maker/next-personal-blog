@@ -23,12 +23,13 @@
   --primary-yellow-bg-hsl: hsl(var(--base-yellow-bg), 30%);
   --primary-yellow-bg-hsla: hsla(var(--base-yellow-bg), 30%, 0.8);
   --primary-green-color-hsl: hsl(var(--base-green-color), 41%);
+  --secondary-font-color-hsl: hsl(var(--base-black), 51%);
 
-  // Resulutions
+  // Resolutions
   --max-width-container: 1230;
   --max-width: 1920;
   --sidebar-width: calc(
-    310px + (400 - 310) * ((100vw - 320px) / (var(--max-width) - 320))
+          310px + (400 - 310) * ((100vw - 320px) / (var(--max-width) - 320))
   );
 
   // Fonts
