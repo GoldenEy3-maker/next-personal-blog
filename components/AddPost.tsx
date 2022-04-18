@@ -49,6 +49,7 @@ const AddPost = () => {
       event.target.style.height = defaultTextareaHeightRef.current + 'px'
     }
 
+
     setTextareaValue(event.target.value)
   }
 

@@ -1,3 +1,5 @@
+@import '../functions';
+
 .posts {
   margin-bottom: 30px;
 
@@ -6,7 +8,7 @@
 }
 
 .postsItem {
-  margin-bottom: 60px;
+  margin-bottom: adaptive-value(60, 30);
 
   border-radius: 5px;
 
@@ -19,6 +21,7 @@
   }
 
   &__attach {
+
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 
@@ -27,19 +30,20 @@
 
 
   &__info {
-    padding: 30px 50px;
+    padding: adaptive-value(30, 15) adaptive-value(50, 20) adaptive-value(30, 13);
   }
 
   &__title {
     font-weight: 500;
-    font-size: 30px;
+    font-size: adaptive-value(30, 18);
+    line-height: adaptive-value(37, 26);
 
-    margin-bottom: 30px;
+    margin-bottom: adaptive-value(30, 15);
   }
 
   &__text {
-    font-size: 20px;
-    line-height: 28px;
+    font-size: adaptive-value(20, 16);
+    line-height: adaptive-value(28, 22);
   }
 }
 
@@ -48,7 +52,7 @@
   align-items: center;
   justify-content: space-between;
 
-  padding: 0 50px 30px;
+  padding: 0 adaptive-value(50, 20) adaptive-value(30, 20);
 
   &__button {
     --blue-font-color-hsl: hsl(var(--base-primary-blue), 60%);
@@ -64,28 +68,11 @@
     a {
       position: relative;
 
-      font-size: 20px;
+      font-size: adaptive-value(20, 17);
 
       color: var(--blue-font-color-hsl);
 
       transition: color .2s ease;
-
-      &:after {
-        content: '';
-
-        position: absolute;
-        bottom: 0;
-        left: 0;
-
-        width: 100%;
-        height: 1px;
-
-        background-color: var(--white-hsl);
-
-        transform: scale(0);
-
-        transition: transform .2s ease;
-      }
     }
 
     @media screen and (min-width: 991.98px) {
@@ -94,10 +81,6 @@
 
         a {
           color: var(--white-hsl);
-
-          &:after {
-            transform: scale(1);
-          }
         }
       }
 
@@ -106,14 +89,16 @@
 }
 
 .postsItemControlsExtrainfo {
-  font-size: 18px;
+  display: flex;
+  align-items: center;
+
+  font-size: adaptive-value(18, 15);
 
   color: var(--secondary-font-color-hsl);
 
-
   &__time {
     &:not(:last-child) {
-      margin-right: 15px;
+      margin-right: adaptive-value(15, 10);
 
       &:after {
         content: '';
@@ -124,7 +109,7 @@
         height: 6px;
 
         margin-bottom: 2px;
-        margin-left: 15px;
+        margin-left: adaptive-value(15, 10);
 
         border-radius: 100%;
 
@@ -165,6 +150,15 @@
           transform: scale(1);
         }
       }
+    }
+  }
+
+  @media (max-width: 425px) {
+    align-items: baseline;
+    flex-direction: column;
+
+    &__time {
+      margin-bottom: 5px;
     }
   }
 }

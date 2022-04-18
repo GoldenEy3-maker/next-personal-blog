@@ -34,23 +34,24 @@ const Posts = ({postsList}: PostsPropsType) => {
         <ul className={posts__list}>
           {postsList.length > 0 && postsList.map(post => (
             <li key={post.id} className={postsItem}>
-              <div className={postsItem__attach}>
-                <Link href={'#'}>
-                  <a>
-                    <Image src={post.image.src} alt={'post attach'} width={post.image.width} height={post.image.height}
-                           layout={'responsive'}/>
-                  </a>
-                </Link>
-              </div>
+              {post.image !== undefined && <div className={postsItem__attach}>
+                  <Link href={'#'}>
+                      <a>
+                          <Image src={post.image.src} width={post.image.width} height={post.image.height}
+                                 alt='post attach'
+                                 layout='responsive' priority/>
+                      </a>
+                  </Link>
+              </div>}
               <div className={postsItem__info}>
-                <div className={postsItem__title}>{post.title}</div>
+                {post.title !== undefined && <div className={postsItem__title}>{post.title}</div>}
                 <div className={postsItem__text}>{post.text}</div>
               </div>
               <div className={postsItemControls}>
                 <div className={postsItemControlsExtrainfo}>
                   <time className={postsItemControlsExtrainfo__time}
                         dateTime={setCurrentDatetime(post.date)}>{post.date}</time>
-                  <span className={postsItemControlsExtrainfo__tag}>{post.tag}</span>
+                  {post.tag !== undefined && <span className={postsItemControlsExtrainfo__tag}>{post.tag}</span>}
                 </div>
                 <div className={postsItemControls__button}>
                   <Link href={'#'}>

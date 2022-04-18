@@ -1,29 +1,26 @@
 @import '../functions.scss';
 
 .addPost {
-  margin: 50px 0;
+  margin: adaptive-value(50, 30) 0;
 
   &__inner {
     background-color: var(--darken-black-custom-hsl);
 
     border-radius: 5px;
 
-    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.45);
   }
 }
 
 .addPostForm {
   display: flex;
 
-  padding: adaptive-value(20, 10);
+  padding: adaptive-value(20, 15);
 
   min-height: adaptive-value(125, 210);
 
   transition: min-height 0.4s ease;
 
-  &._focusTextarea {
-    min-height: adaptive-value(180, 250);
-  }
 
   &__textarea {
     position: relative;
@@ -32,6 +29,8 @@
 
     > textarea {
       width: 100%;
+      //height: adaptive-value(99, 130);
+
       height: 99px;
 
       font-size: 25px;
@@ -50,6 +49,8 @@
 
     > span {
       pointer-events: none;
+
+      color: var(--placeholder-color-hsl);
 
       position: absolute;
       top: 8px;
@@ -99,7 +100,7 @@
       align-items: center;
       justify-content: center;
 
-      padding: 16px;
+      padding: adaptive-value(16, 10);
 
       background-color: var(--white-hsl);
 
@@ -119,7 +120,7 @@
 
       background-color: var(--primary-blue-hsl);
 
-      padding: 18px 21px;
+      padding: adaptive-value(18, 12) adaptive-value(21, 15);
 
       border-radius: 100%;
       border: none;

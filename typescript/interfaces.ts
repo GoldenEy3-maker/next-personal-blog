@@ -50,9 +50,9 @@ export interface ResponseMessageComponent {
 
 export interface PostsList {
   id: number
-  image: StaticImageData
-  title: string
+  image?: StaticImageData
+  title?: string
   text: string
   date: string
-  tag: string
+  tag?: string
 }
