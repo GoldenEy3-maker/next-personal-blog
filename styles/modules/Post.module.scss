@@ -34,23 +34,17 @@
     background-color: transparent;
   }
 
-  &__share {
-    display: flex;
-    align-items: center;
+}
 
-    &:after {
-      content: '';
+.postControlsShare {
+  display: flex;
+  align-items: center;
 
-      display: inline-block;
+  &__icon {
+    width: adaptive-value(27, 17);
+    height: adaptive-value(27, 17);
 
-      width: adaptive-value(27, 17);
-      height: adaptive-value(27, 17);
-
-      margin-left: 10px;
-
-      background: url('/public/icons/Share_icon.svg') center no-repeat;
-      background-size: cover;
-    }
+    margin-left: 10px;
   }
 }
 
