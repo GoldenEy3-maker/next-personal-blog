@@ -3,7 +3,15 @@
 @function adaptive-value($maxValue, $minValue, $resolution: 320) {
   $addValue: $maxValue - math.abs($minValue);
   @return calc(
-    #{$minValue + px} + #{$addValue} *
-      ((100vw - #{$resolution + px}) / #{calc(var(--max-width) - $resolution)})
+          #{$minValue + px} + #{$addValue} *
+          ((100vw - #{$resolution + px}) / #{calc(var(--max-width) - $resolution)})
+  );
+}
+
+@function media-adaptive-value($maxValue, $minValue, $mediaQuery, $resolution: 320) {
+  $addValue: $maxValue - math.abs($minValue);
+  @return calc(
+          #{$minValue + px} + #{$addValue} *
+          ((100vw - #{$resolution + px}) / #{calc($mediaQuery - $resolution)})
   );
 }

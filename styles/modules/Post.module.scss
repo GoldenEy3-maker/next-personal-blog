@@ -130,7 +130,6 @@
   line-height: 19px;
 
   &__title {
-
     font-size: 16px;
     line-height: 19px;
 
@@ -139,7 +138,7 @@
 
       white-space: nowrap;
 
-      display: block;
+      display: inline-block;
 
       max-width: adaptive-value(400, 250, 991.98);
 
@@ -180,7 +179,13 @@
 
     @media (max-width: 991.98px) {
       a {
-        max-width: adaptive-value(350, 240);
+        max-width: 350px;
+      }
+    }
+
+    @media (max-width: 425px) {
+      a {
+        max-width: media-adaptive-value(350, 250, 425)
       }
     }
   }
