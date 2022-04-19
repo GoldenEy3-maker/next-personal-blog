@@ -7,6 +7,7 @@
   --base-primary-red: 4, 85%;
   --base-yellow-bg: 67, 100%;
   --base-green-color: 113, 85%;
+  --base-font-yellow-color: 54, 78%;
 
   // Hsl
   --black-hsl: hsl(var(--base-black), 0%);
@@ -24,6 +25,7 @@
   --primary-yellow-bg-hsla: hsla(var(--base-yellow-bg), 30%, 0.8);
   --primary-green-color-hsl: hsl(var(--base-green-color), 41%);
   --secondary-font-color-hsl: hsl(var(--base-black), 51%);
+  --yellow-font-color-hsl: hsl(var(--base-font-yellow-color), 80%);
 
   // Resolutions
   --max-width-container: 1230;

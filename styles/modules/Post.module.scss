@@ -1,0 +1,194 @@
+@import '../functions';
+
+.post {
+  margin: 20px 0;
+
+  &__inner {
+    border-radius: 5px;
+
+    box-shadow: 0 0 20px rgba(black, .45);
+
+    padding: adaptive-value(30, 20) adaptive-value(40, 20);
+
+    background-color: var(--primary-color-hsl);
+  }
+}
+
+.postControls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: adaptive-value(20, 10);
+
+  > button {
+    cursor: pointer;
+
+    font-size: adaptive-value(18, 15);
+
+    padding: 10px 0;
+
+    border: none;
+
+    color: var(--white-hsl);
+    background-color: transparent;
+  }
+
+  &__share {
+    display: flex;
+    align-items: center;
+
+    &:after {
+      content: '';
+
+      display: inline-block;
+
+      width: adaptive-value(27, 17);
+      height: adaptive-value(27, 17);
+
+      margin-left: 10px;
+
+      background: url('../../public/icons/Share_icon.svg') center no-repeat;
+      background-size: cover;
+    }
+  }
+}
+
+.postTitle {
+  font-size: adaptive-value(25, 20);
+
+  line-height: adaptive-value(32, 27);
+
+  margin-bottom: adaptive-value(10, 15);
+}
+
+.postContent {
+  margin: adaptive-value(30, 15) 0;
+
+  &__text {
+    font-size: adaptive-value(18, 16);
+    line-height: adaptive-value(25, 23);
+
+    padding: adaptive-value(15, 10) 0;
+  }
+
+  &__attach {
+    margin: adaptive-value(30, 10) 0;
+  }
+}
+
+.postInterestingReading {
+  margin-top: adaptive-value(30, 15);
+
+  &:before {
+    content: '';
+
+    display: inline-block;
+
+    width: 100%;
+    height: 1px;
+
+    margin-bottom: adaptive-value(27, 15);
+
+    background-color: var(--primary-black-hsl);
+  }
+
+  &__title {
+    font-size: adaptive-value(25, 20);
+  }
+
+  &__list {
+    margin-top: adaptive-value(40, 25);
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr 1fr;
+
+    gap: 15px 20px;
+  }
+
+  @media (max-width: 767px) {
+    &__list {
+      grid-template-columns: auto;
+      grid-template-rows: auto;
+    }
+  }
+}
+
+.postExtrainfo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  > time {
+    margin-bottom: 0;
+  }
+}
+
+.postInterestingReadingItem {
+  font-size: 16px;
+  line-height: 19px;
+
+  &__title {
+
+    font-size: 16px;
+    line-height: 19px;
+
+    a {
+      position: relative;
+
+      white-space: nowrap;
+
+      display: block;
+
+      max-width: adaptive-value(400, 250, 991.98);
+
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      color: var(--yellow-font-color-hsl);
+
+      &:after {
+        content: '';
+
+        position: absolute;
+        bottom: 0;
+        left: 0;
+
+        width: 100%;
+        height: 1px;
+
+        background-color: var(--yellow-font-color-hsl);
+
+        transform: scale(0);
+
+        transition: transform .2s ease;
+      }
+    }
+
+
+    @media screen and (min-width: 991.98px) {
+      a {
+        &:hover {
+          &:after {
+            transform: scale(1);
+
+          }
+        }
+      }
+    }
+
+    @media (max-width: 991.98px) {
+      a {
+        max-width: adaptive-value(350, 240);
+      }
+    }
+  }
+
+  &__date {
+    font-size: 14px;
+    line-height: 17px;
+
+    color: var(--secondary-font-color-hsl);
+  }
+}

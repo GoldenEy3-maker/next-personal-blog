@@ -1,4 +1,4 @@
-import type {GetServerSideProps} from "next";
+import type {GetServerSideProps, NextPage} from "next";
 import {CookieType, RoutePaths} from "../typescript/enums";
 
 import MainLayout from '../components/MainLayout'
@@ -11,7 +11,7 @@ import jwt from "jsonwebtoken";
 
 import {postsList} from '../serverData/postsList'
 
-const SearchPage = () => {
+const SearchPage: NextPage = () => {
   const {searchValue} = useSearchContext()
 
   return (

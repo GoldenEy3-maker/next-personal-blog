@@ -4,7 +4,7 @@ import {RoutePaths} from '../typescript/enums'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 
 import {useSearchContext} from '../context/search.context'
 
@@ -39,15 +39,15 @@ const Posts = ({postsList, filterBy = ''}: PostsPropsType) => {
 
   const {setSearchValueByTagContent} = useSearchContext()
 
-  const searchingByFilter = (title: string | undefined, text: string, tag: string | undefined): boolean => {
+  const searchingByFilter = useCallback((title: string | undefined, text: string, tag: string | undefined): boolean => {
     return title?.trim().toUpperCase().includes(filterBy) || tag?.trim().toUpperCase().includes(filterBy) || text.trim().toUpperCase().includes(filterBy)
-  }
+  }, [filterBy])
 
   useEffect(() => {
     if (filterBy !== undefined) {
       setPostsData(postsList.filter(({title, text, tag}) => searchingByFilter(title, text, tag)))
     }
-  }, [filterBy])
+  }, [filterBy, postsList, searchingByFilter])
 
   return (
     <div className={posts}>
@@ -58,7 +58,7 @@ const Posts = ({postsList, filterBy = ''}: PostsPropsType) => {
               <li key={post.id} className={postsItem}>
                 {post.image !== undefined && (
                   <div className={postsItem__attach}>
-                    <Link href={'#'}>
+                    <Link href={`/posts/${post.id}`}>
                       <a>
                         <Image
                           src={post.image.src}
