@@ -6,7 +6,6 @@ import {useState, useCallback, useEffect, useRef} from 'react'
 
 import {setCurrentDatetime} from '../lib/functions'
 
-// import 'swiper/css'
 import styles from '../styles/modules/Stories.module.scss'
 
 type StoriesPropsType = { storiesList: StoriesList[] }

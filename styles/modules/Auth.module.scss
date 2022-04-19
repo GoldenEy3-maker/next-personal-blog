@@ -11,8 +11,8 @@
   &__inner {
     flex: 0 1 650px;
 
-    padding: 40px;
-    margin: 50px 0;
+    padding: adaptive-value(40, 25) adaptive-value(40, 20);
+    margin: adaptive-value(50, 30) 0;
 
     background-color: var(--primary-color-hsl);
 
@@ -22,9 +22,9 @@
   &__title {
     text-align: center;
 
-    font-size: 30px;
+    font-size: adaptive-value(30, 25);
 
-    margin-bottom: 50px;
+    margin-bottom: adaptive-value(50, 35);
   }
 }
 
@@ -47,7 +47,7 @@
   display: flex;
   flex-direction: column;
 
-  width: 350px;
+  width: adaptive-value(350, 280);
 }
 
 .authFormControls {
@@ -55,13 +55,13 @@
   align-items: center;
   justify-content: center;
 
-  margin-top: 50px;
+  margin-top: adaptive-value(50, 30);
 
   > button {
-    font-size: 20px;
+    font-size: adaptive-value(20, 16);
 
-    padding: 8px 15px;
-    margin: 0 10px;
+    padding: 8px adaptive-value(15, 10);
+    margin: 0 adaptive-value(10, 8);
 
     color: var(--white-hsl);
     background-color: var(--primary-blue-hsl);
@@ -77,6 +77,7 @@
 
     &:not(:disabled) {
       cursor: pointer;
+
       &:hover {
         background-color: var(--primary-darken-blue-hsl);
       }

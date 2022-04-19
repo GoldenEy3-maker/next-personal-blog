@@ -1,5 +1,7 @@
+@import '../functions';
+
 .responseMessage {
-  margin: 50px 0 0;
+  margin: adaptive-value(50, 20) 0 0;
 
   height: 55px;
 
@@ -8,7 +10,7 @@
   justify-content: center;
 
   transition: height 0.2s ease, margin 0.2s ease, opacity 0.2s ease,
-    visibility 0.2s ease, transform 0.2s ease;
+  visibility 0.2s ease, transform 0.2s ease;
 
   &._hideMessage {
     height: 0;
@@ -28,7 +30,7 @@
 
     max-width: 400px;
 
-    padding: 15px;
+    padding: adaptive-value(15, 11);
 
     border-radius: 10px;
 
@@ -54,7 +56,7 @@
   &__text {
     word-wrap: break-word;
 
-    font-size: 20px;
-    line-height: 25px;
+    font-size: adaptive-value(20, 16);
+    line-height: adaptive-value(25, 22);
   }
 }

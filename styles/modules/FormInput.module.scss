@@ -1,13 +1,15 @@
+@import '../functions';
+
 .formInputsItem {
   position: relative;
 
   width: inherit;
   height: var(--input-height);
 
-  margin-bottom: 50px;
+  margin-bottom: adaptive-value(50, 30);
 
   transition: opacity 0.3s ease, height 0.3s ease, visibility 0.3s ease,
-    transform 0.2s ease, margin-bottom 0.2s ease;
+  transform 0.2s ease, margin-bottom 0.2s ease;
 
   &._lastInput {
     margin-bottom: 0;
@@ -25,7 +27,7 @@
   }
 
   &__label {
-    font-size: 20px;
+    font-size: adaptive-value(20, 17);
 
     color: var(--placeholder-color-hsl);
 
@@ -40,14 +42,14 @@
     width: inherit;
     position: relative;
 
-    margin-top: 10px;
+    margin-top: adaptive-value(10, 7);
 
     overflow: hidden;
 
     > input {
       width: inherit;
 
-      font-size: 20px;
+      font-size: adaptive-value(20, 17);
 
       padding: 8px 15px;
 
@@ -77,19 +79,19 @@
       top: 50%;
       left: 15px;
 
-      font-size: 20px;
+      font-size: adaptive-value(20, 17);
 
       color: var(--placeholder-color-hsl);
 
       transform: translateY(-50%);
 
       transition: transform 0.15s ease, opacity 0.15s ease,
-        visibility 0.15s ease;
+      visibility 0.15s ease;
     }
 
     ._focus & {
       &::after {
-        left: 0%;
+        left: 0;
       }
     }
 
@@ -123,9 +125,9 @@
   }
 
   &__validMessage {
-    font-size: 18px;
+    font-size: adaptive-value(18, 16);
 
-    margin-top: 15px;
+    margin-top: adaptive-value(15, 10);
     padding: 8px 15px;
 
     border-radius: 10px;
@@ -152,7 +154,7 @@
   transform: translateY(-100px);
 
   transition: transform 0.15s ease, opacity 0.15s ease, visibility 0.15s ease,
-    margin-top 0.2s ease;
+  margin-top 0.2s ease;
 
   ._typing & {
     margin-top: 15px;
