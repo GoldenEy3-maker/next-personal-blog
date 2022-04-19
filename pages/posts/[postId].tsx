@@ -137,7 +137,7 @@ const PostPage: NextPage = () => {
                   {postsList.length > 0 && postsList.map(post => (
                     post.title !== undefined && (
                       <li key={post.id} className={postInterestingReadingItem}>
-                        <div className={postInterestingReadingItem__title}><Link href={RoutePaths.SearchPage}>
+                        <div className={postInterestingReadingItem__title}><Link href={`/posts/${post.id}`}>
                           <a>{post.title}</a>
                         </Link></div>
                         <time className={postInterestingReadingItem__date}
