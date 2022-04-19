@@ -1,15 +1,15 @@
-import type { MouseEventHandler, TouchEventHandler } from 'react'
-import { StroiesList } from '../typescript/interfaces'
+import type {MouseEventHandler, TouchEventHandler} from 'react'
+import {StoriesList} from '../typescript/interfaces'
 
 import Image from 'next/image'
-import { useState, useCallback, useEffect, useRef } from 'react'
+import {useState, useCallback, useEffect, useRef} from 'react'
 
-import { setCurrentDatetime } from '../lib/functions'
+import {setCurrentDatetime} from '../lib/functions'
 
 // import 'swiper/css'
 import styles from '../styles/modules/Stories.module.scss'
 
-type StoriesPropsType = { storiesList: StroiesList[] }
+type StoriesPropsType = { storiesList: StoriesList[] }
 
 const {
   stories,
@@ -23,7 +23,7 @@ const {
   stories__control,
 } = styles
 
-const Stories = ({ storiesList }: StoriesPropsType) => {
+const Stories = ({storiesList}: StoriesPropsType) => {
   const [isListDragging, setIsListDragging] = useState(false)
   const [offsetX, setOffsetX] = useState(0)
   const [slideIndex, setSlideIndex] = useState(0)
@@ -141,7 +141,7 @@ const Stories = ({ storiesList }: StoriesPropsType) => {
 
       setCurrentListLenght(currentLenght)
     }
-  }, [slideWidth])
+  }, [slideWidth, listLenght])
 
   useEffect(() => {
     changeSliderTrackSizeHandler()
@@ -201,9 +201,10 @@ const Stories = ({ storiesList }: StoriesPropsType) => {
             disabled={slideIndex <= 0}
           >
             <svg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'>
-              <title />
+              <title/>
               <g data-name='Layer 2' id='Layer_2'>
-                <path d='M10.1,23a1,1,0,0,0,0-1.41L5.5,17H29.05a1,1,0,0,0,0-2H5.53l4.57-4.57A1,1,0,0,0,8.68,9L2.32,15.37a.9.9,0,0,0,0,1.27L8.68,23A1,1,0,0,0,10.1,23Z' />
+                <path
+                  d='M10.1,23a1,1,0,0,0,0-1.41L5.5,17H29.05a1,1,0,0,0,0-2H5.53l4.57-4.57A1,1,0,0,0,8.68,9L2.32,15.37a.9.9,0,0,0,0,1.27L8.68,23A1,1,0,0,0,10.1,23Z'/>
               </g>
             </svg>
           </button>
@@ -213,9 +214,10 @@ const Stories = ({ storiesList }: StoriesPropsType) => {
             disabled={slideIndex >= currentListLenght}
           >
             <svg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'>
-              <title />
+              <title/>
               <g data-name='Layer 2' id='Layer_2'>
-                <path d='M10.1,23a1,1,0,0,0,0-1.41L5.5,17H29.05a1,1,0,0,0,0-2H5.53l4.57-4.57A1,1,0,0,0,8.68,9L2.32,15.37a.9.9,0,0,0,0,1.27L8.68,23A1,1,0,0,0,10.1,23Z' />
+                <path
+                  d='M10.1,23a1,1,0,0,0,0-1.41L5.5,17H29.05a1,1,0,0,0,0-2H5.53l4.57-4.57A1,1,0,0,0,8.68,9L2.32,15.37a.9.9,0,0,0,0,1.27L8.68,23A1,1,0,0,0,10.1,23Z'/>
               </g>
             </svg>
           </button>
