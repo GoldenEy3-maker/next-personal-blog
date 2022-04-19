@@ -1,17 +1,15 @@
-import { MouseEventHandler, TouchEventHandler, useEffect } from 'react'
+import type { MouseEventHandler, TouchEventHandler } from 'react'
+import { StroiesList } from '../typescript/interfaces'
 
 import Image from 'next/image'
-import { useState, useCallback, useRef } from 'react'
+import { useState, useCallback, useEffect, useRef } from 'react'
 
 import { setCurrentDatetime } from '../lib/functions'
 
 // import 'swiper/css'
 import styles from '../styles/modules/Stories.module.scss'
 
-import Stories1 from '../public/images/stories1.jpg'
-import Stories2 from '../public/images/stories2.jpg'
-import Stories3 from '../public/images/stories3.jpg'
-import Stories4 from '../public/images/stories4.jpg'
+type StoriesPropsType = { storiesList: StroiesList[] }
 
 const {
   stories,
@@ -25,7 +23,7 @@ const {
   stories__control,
 } = styles
 
-const Stories = () => {
+const Stories = ({ storiesList }: StoriesPropsType) => {
   const [isListDragging, setIsListDragging] = useState(false)
   const [offsetX, setOffsetX] = useState(0)
   const [slideIndex, setSlideIndex] = useState(0)
@@ -38,7 +36,7 @@ const Stories = () => {
 
   const slideGap = 25
   const slideWidth = 280 + slideGap
-  const listLenght = 8
+  const listLenght = storiesList.length
 
   const getCurrentEvent = (event: MouseEvent | TouchEvent) => {
     // @ts-ignore
@@ -172,145 +170,30 @@ const Stories = () => {
               transitionDuration: !isListDragging ? '400ms' : '0ms',
             }}
           >
-            <li className={storiesItem}>
-              <div className={storiesItem__preview}>
-                <Image
-                  src={Stories1}
-                  alt='storie preview picture'
-                  layout='responsive'
-                  priority
-                  draggable={false}
-                />
-              </div>
-              <div className={storiesItem__text}>Отдыхаю на природе</div>
-              <div className={storiesItem__date}>
-                <time dateTime={setCurrentDatetime('21.09.2020')}>
-                  21.09.2020
-                </time>
-              </div>
-            </li>
-            <li className={storiesItem}>
-              <div className={storiesItem__preview}>
-                <Image
-                  src={Stories2}
-                  alt='storie preview picture'
-                  layout='responsive'
-                  priority
-                  draggable={false}
-                />
-              </div>
-              <div className={storiesItem__text}>Заканчиваю сложный проект</div>
-              <div className={storiesItem__date}>
-                <time dateTime={setCurrentDatetime('15.09.2020')}>
-                  15.09.2020
-                </time>
-              </div>
-            </li>
-            <li className={storiesItem}>
-              <div className={storiesItem__preview}>
-                <Image
-                  src={Stories3}
-                  alt='storie preview picture'
-                  layout='responsive'
-                  priority
-                  draggable={false}
-                />
-              </div>
-              <div className={storiesItem__text}>Переехал в новую квартиру</div>
-              <div className={storiesItem__date}>
-                <time dateTime={setCurrentDatetime('11.09.2020')}>
-                  11.09.2020
-                </time>
-              </div>
-            </li>
-            <li className={storiesItem}>
-              <div className={storiesItem__preview}>
-                <Image
-                  src={Stories4}
-                  alt='storie preview picture'
-                  layout='responsive'
-                  priority
-                  draggable={false}
-                />
-              </div>
-              <div className={storiesItem__text}>Осень пришла!</div>
-              <div className={storiesItem__date}>
-                <time dateTime={setCurrentDatetime('28.08.2020')}>
-                  28.08.2020
-                </time>
-              </div>
-            </li>
-            <li className={storiesItem}>
-              <div className={storiesItem__preview}>
-                <Image
-                  src={Stories1}
-                  alt='storie preview picture'
-                  layout='responsive'
-                  priority
-                  draggable={false}
-                />
-              </div>
-              <div className={storiesItem__text}>Отдыхаю на природе</div>
-              <div className={storiesItem__date}>
-                <time dateTime={setCurrentDatetime('21.09.2020')}>
-                  21.09.2020
-                </time>
-              </div>
-            </li>
-            <li className={storiesItem}>
-              <div className={storiesItem__preview}>
-                <Image
-                  src={Stories2}
-                  alt='storie preview picture'
-                  layout='responsive'
-                  priority
-                  draggable={false}
-                />
-              </div>
-              <div className={storiesItem__text}>Заканчиваю сложный проект</div>
-              <div className={storiesItem__date}>
-                <time dateTime={setCurrentDatetime('15.09.2020')}>
-                  15.09.2020
-                </time>
-              </div>
-            </li>
-            <li className={storiesItem}>
-              <div className={storiesItem__preview}>
-                <Image
-                  src={Stories3}
-                  alt='storie preview picture'
-                  layout='responsive'
-                  priority
-                  draggable={false}
-                />
-              </div>
-              <div className={storiesItem__text}>Переехал в новую квартиру</div>
-              <div className={storiesItem__date}>
-                <time dateTime={setCurrentDatetime('11.09.2020')}>
-                  11.09.2020
-                </time>
-              </div>
-            </li>
-            <li className={storiesItem}>
-              <div className={storiesItem__preview}>
-                <Image
-                  src={Stories4}
-                  alt='storie preview picture'
-                  layout='responsive'
-                  priority
-                  draggable={false}
-                />
-              </div>
-              <div className={storiesItem__text}>Осень пришла!</div>
-              <div className={storiesItem__date}>
-                <time dateTime={setCurrentDatetime('28.08.2020')}>
-                  28.08.2020
-                </time>
-              </div>
-            </li>
+            {storiesList.length > 0 &&
+              storiesList.map((storie) => (
+                <li key={storie.id} className={storiesItem}>
+                  <div className={storiesItem__preview}>
+                    <Image
+                      src={storie.image.src}
+                      alt='storie preview picture'
+                      width={storie.image.width}
+                      height={storie.image.height}
+                      layout='responsive'
+                      priority
+                      draggable={false}
+                    />
+                  </div>
+                  <div className={storiesItem__text}>{storie.title}</div>
+                  <div className={storiesItem__date}>
+                    <time dateTime={setCurrentDatetime(storie.date)}>
+                      {storie.date}
+                    </time>
+                  </div>
+                </li>
+              ))}
           </ul>
         </div>
-
         <div className={stories__control}>
           <button
             type={'button'}

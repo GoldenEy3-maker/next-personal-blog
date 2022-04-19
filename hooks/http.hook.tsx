@@ -1,4 +1,4 @@
-import type {GenericReguestFn} from '../typescript/interfaces'
+import type {GenericRequestFn} from '../typescript/interfaces'
 
 import {useCallback, useState} from 'react'
 
@@ -6,7 +6,7 @@ import {useCallback, useState} from 'react'
 export const useHttp = () => {
   const [isRequestInProcess, setIsRequestInProcess] = useState<boolean>(false)
 
-  const request: GenericReguestFn = useCallback(async (url, options) => {
+  const request: GenericRequestFn = useCallback(async (url, options) => {
     setIsRequestInProcess(true)
     try {
       const response = await fetch(url, options)

@@ -1,10 +1,11 @@
-import type { MouseEvent } from 'react'
+import type { MouseEvent, MouseEventHandler } from 'react'
 import { RoutePaths } from '../typescript/enums'
 
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 
 import { useWindowContext } from '../context/window.context'
+import { useSearchContext } from '../context/search.context'
 
 import { setDynamicClasses } from '../lib/functions'
 
@@ -32,6 +33,7 @@ const Navigation = () => {
     height: undefined,
     isActive: true,
   })
+  const { setSearchValueByTagContent } = useSearchContext()
 
   const isWindowInLaptopSize = useWindowContext()
 
@@ -107,18 +109,22 @@ const Navigation = () => {
                 }
               >
                 <li className={navSubmenu__item}>
-                  <Link href='#'>
-                    <a>Создание сайтов</a>
+                  <Link href={RoutePaths.SearchPage}>
+                    <a onClick={setSearchValueByTagContent}>Создание сайтов</a>
                   </Link>
                 </li>
                 <li className={navSubmenu__item}>
-                  <Link href='#'>
-                    <a>Интернет-маркетинг</a>
+                  <Link href={RoutePaths.SearchPage}>
+                    <a onClick={setSearchValueByTagContent}>
+                      Интернет-маркетинг
+                    </a>
                   </Link>
                 </li>
                 <li className={navSubmenu__item}>
-                  <Link href='#'>
-                    <a>Продвижение видео</a>
+                  <Link href={RoutePaths.SearchPage}>
+                    <a onClick={setSearchValueByTagContent}>
+                      Продвижение видео
+                    </a>
                   </Link>
                 </li>
               </ul>

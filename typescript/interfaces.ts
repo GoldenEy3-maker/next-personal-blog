@@ -5,7 +5,6 @@ import type {
   StrongPasswordOptions,
 } from './types'
 
-
 export interface SetStaticClasses {
   (classes: string[]): string
 }
@@ -26,7 +25,7 @@ export interface Endpoint<ResponseData> {
   (req: NextApiRequest, res: NextApiResponse<ResponseData>): Promise<void>
 }
 
-export interface GenericReguestFn {
+export interface GenericRequestFn {
   <ResponseData>(url: string, options?: RequestInit): Promise<ResponseData>
 }
 
@@ -35,17 +34,19 @@ export interface AuthValues {
   password: string
 }
 
-export interface RegisterValues extends AuthValues {
-  name: string
-  confirmPassword: string
-}
-
 export interface FormInputComponent {
   (props: FormInputProps): JSX.Element
 }
 
 export interface ResponseMessageComponent {
   (props: ResponseMessageProps): JSX.Element
+}
+
+export interface StoriesList {
+  id: number
+  image: StaticImageData
+  title: string
+  date: string
 }
 
 export interface PostsList {

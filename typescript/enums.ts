@@ -1,6 +1,7 @@
 export enum RoutePaths {
   HomePage = '/',
   ProfilePage = '/profile',
+  SearchPage = '/search',
   AuthPage = '/auth',
 }
 

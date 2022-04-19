@@ -1,5 +1,7 @@
 import Navigation from './Navigation'
 
+import SearchBar from './SearchBar'
+
 import { useSidebarContext } from '../context/sidebar.context'
 
 import { setDynamicClasses } from '../lib/functions'
@@ -14,8 +16,6 @@ const {
   _burgerActive,
   burger__inner,
   header__right,
-  headerSearchForm,
-  headerSearchForm__input,
 } = styles
 
 const Header = () => {
@@ -40,13 +40,7 @@ const Header = () => {
           </div>
         </div>
         <div className={header__right}>
-          <form className={headerSearchForm}>
-            <input
-              type='text'
-              className={headerSearchForm__input}
-              placeholder='Поиск по блогу'
-            />
-          </form>
+          <SearchBar />
         </div>
       </div>
     </header>

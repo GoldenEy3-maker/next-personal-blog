@@ -5,23 +5,15 @@ import Head from 'next/head'
 import Header from './Header'
 import Sidebar from './Sidebar'
 
-import { SidebarContextProvider } from '../context/sidebar.context'
-import { WindowContextProvider } from '../context/window.context'
-
 const MainLayout = ({ children }: ChildrenProps) => {
   return (
     <>
       <Head>
         <title>Personal blog</title>
       </Head>
-
       <div className='wrapper'>
-        <WindowContextProvider>
-          <SidebarContextProvider>
-            <Sidebar />
-            <Header />
-          </SidebarContextProvider>
-        </WindowContextProvider>
+        <Sidebar />
+        <Header />
         <main className='page-content'>
           <div className='page-content__inner _container'>{children}</div>
         </main>
