@@ -11,6 +11,10 @@
 
   background-color: var(--darken-black-custom-hsl);
 
+  ._lockScroll & {
+    padding-right: var(--scrollbarCompensation);
+  }
+
   &__inner {
     display: flex;
     align-items: center;
@@ -23,6 +27,7 @@
   &__left {
     flex: 1 1 auto;
   }
+
   &__right {
     flex: 0 1 20%;
   }

@@ -17,6 +17,12 @@ export interface SetDynamicClasses {
   }): string
 }
 
+export interface SidebarContextStorage {
+  isSidebarActive: boolean
+  toggleSidebarState: () => void
+}
+
+
 export interface IsStrongPassword {
   (password: string, options: StrongPasswordOptions): boolean
 }

@@ -242,28 +242,19 @@
 }
 
 .sidebarControls {
-  position: absolute;
+  position: sticky;
   bottom: 0;
-  left: 50%;
 
   width: 100%;
-  // height: 200px;
-  // height: 110px;
   height: adaptive-value(150, 110);
 
-  // padding: 0 adaptive-value(20, 10);
-
-  transform: translateX(-50%);
 
   &__inner {
     width: 100%;
     height: 100%;
 
-    padding-top: 30px;
+    padding: 25px 0;
 
-    // display: flex;
-    // justify-content: center;
-    // align-items: center;
 
     background-color: var(--primary-color-hsl);
 
@@ -273,6 +264,7 @@
       background-color: var(--darken-black-custom-hsl);
     }
   }
+
   &__button {
     cursor: pointer;
 

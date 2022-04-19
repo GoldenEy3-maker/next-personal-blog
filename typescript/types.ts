@@ -1,6 +1,7 @@
 import type {ChangeEventHandler, ReactNode} from 'react'
 import {ResponseMessageType} from './enums'
 
+
 export type ChildrenProps = {
   children:
     | ReactNode
@@ -9,11 +10,6 @@ export type ChildrenProps = {
     | JSX.Element[]
     | string
     | string[]
-}
-
-export type TSidebarContext = {
-  isSidebarActive: boolean
-  toggleSidebarState: () => void
 }
 
 export type ResponseData<DataType = null> = {

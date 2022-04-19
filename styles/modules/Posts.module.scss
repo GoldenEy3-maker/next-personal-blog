@@ -16,6 +16,7 @@
 
   background-color: var(--primary-color-hsl);
 
+
   &:last-child {
     margin-bottom: 0;
   }
@@ -28,8 +29,7 @@
   }
 
   &__info {
-    padding: adaptive-value(30, 15) adaptive-value(50, 20)
-      adaptive-value(30, 13);
+    padding: adaptive-value(30, 15) adaptive-value(50, 20) adaptive-value(30, 13);
   }
 
   &__title {
@@ -41,9 +41,15 @@
   }
 
   &__text {
-    font-size: adaptive-value(20, 16);
+    font-size: adaptive-value(20, 15);
     line-height: adaptive-value(28, 22);
   }
+}
+
+.postsEmpty {
+  margin-top: 30px;
+
+  font-size: 30px;
 }
 
 .postsItemControls {

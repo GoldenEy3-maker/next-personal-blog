@@ -1,1 +1,0 @@
-export const LAPTOP_SIZE = 991.98

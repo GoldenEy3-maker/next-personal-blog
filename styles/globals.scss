@@ -17,6 +17,12 @@ body {
 
   color: var(--white-hsl);
   background-color: var(--primary-bg-hsl);
+
+  &._lockScroll {
+    overflow: hidden;
+
+    padding-right: var(--scrollCompensation)
+  }
 }
 
 a {

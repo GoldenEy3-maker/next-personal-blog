@@ -5,6 +5,10 @@ export enum RoutePaths {
   AuthPage = '/auth',
 }
 
+export enum WindowResolutions {
+  LaptopSize = 991.98
+}
+
 export enum ResponseMessageType {
   Success = 'success',
   Warning = 'warning',

@@ -1,20 +1,34 @@
-import type { ChildrenProps, TSidebarContext } from '../typescript/types'
+import type {ChildrenProps} from '../typescript/types'
+import type {SidebarContextStorage} from '../typescript/interfaces'
 
-import { createContext, useContext, useState } from 'react'
+import {createContext, useContext, useEffect, useState} from 'react'
 
-const SidebarContext = createContext<TSidebarContext | null>(null)
+import {useScroll} from "../hooks/scroll.hook";
+import {useWindowResize} from "../hooks/window.hook";
 
-export const SidebarContextProvider = ({ children }: ChildrenProps) => {
+const SidebarContext = createContext<SidebarContextStorage | null>(null)
+
+export const SidebarContextProvider = ({children}: ChildrenProps) => {
   const [isSidebarActive, setIsActive] = useState(false)
+
+  const {toggleLockBody, unlockBody} = useScroll()
+  const isLaptopSize = useWindowResize()
 
   const toggleSidebarState = () => {
     setIsActive((prev) => !prev)
+
+    toggleLockBody(!isSidebarActive)
   }
 
-  const valueContext: TSidebarContext = { isSidebarActive, toggleSidebarState }
+  useEffect(() => {
+    if (!isLaptopSize) {
+      setIsActive(false)
+      unlockBody()
+    }
+  }, [isLaptopSize, unlockBody])
 
   return (
-    <SidebarContext.Provider value={valueContext}>
+    <SidebarContext.Provider value={{isSidebarActive, toggleSidebarState}}>
       {children}
     </SidebarContext.Provider>
   )
@@ -29,5 +43,5 @@ export const useSidebarContext = () => {
     )
   }
 
-  return { ...context }
+  return {...context}
 }

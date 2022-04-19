@@ -1,8 +1,5 @@
 import type {GetServerSideProps} from "next";
-import type {PostsList} from '../typescript/interfaces'
 import {CookieType, RoutePaths} from "../typescript/enums";
-
-import {useEffect, useState} from 'react'
 
 import MainLayout from '../components/MainLayout'
 
@@ -16,18 +13,11 @@ import {postsList} from '../serverData/postsList'
 
 const SearchPage = () => {
   const {searchValue} = useSearchContext()
-  const [postsData, setPostsData] = useState<PostsList[]>(postsList)
-
-  useEffect(() => {
-    setPostsData((posts) =>
-      posts.map((post) => ({...post, image: undefined}))
-    )
-  }, [])
 
   return (
     <MainLayout>
       <Posts
-        postsList={postsData}
+        postsList={postsList}
         filterBy={searchValue.trim().toUpperCase()}
       />
     </MainLayout>

@@ -1,24 +1,22 @@
-import { useEffect, useState } from 'react'
-import { LAPTOP_SIZE } from '../lib/vars'
+import {WindowResolutions} from "../typescript/enums";
+
+import {useEffect, useState} from 'react'
+
 
 export const useWindowResize = () => {
   const [isWindowInLaptopSize, setIsWindowInLaptopSize] =
     useState<boolean>(false)
 
-  const handleResizeListener = () => {
-    if (window.innerWidth <= LAPTOP_SIZE) {
-      setIsWindowInLaptopSize(true)
-    } else {
-      setIsWindowInLaptopSize(false)
-    }
+  const handleWindowResizeListener = () => {
+    setIsWindowInLaptopSize(window.innerWidth <= WindowResolutions.LaptopSize)
   }
 
   useEffect(() => {
-    if (window.innerWidth <= LAPTOP_SIZE) setIsWindowInLaptopSize(true)
+    setIsWindowInLaptopSize(window.innerWidth <= WindowResolutions.LaptopSize)
 
-    window.addEventListener('resize', handleResizeListener)
+    window.addEventListener('resize', handleWindowResizeListener)
 
-    return () => window.removeEventListener('resize', handleResizeListener)
+    return () => window.removeEventListener('resize', handleWindowResizeListener)
   }, [])
 
   return isWindowInLaptopSize

@@ -1,6 +1,6 @@
-import type { NextPage } from 'next'
-import { ChangeEventHandler, FormEventHandler, useRef } from 'react'
-import type { AuthValues } from '../typescript/interfaces'
+import type {NextPage} from 'next'
+import {ChangeEventHandler, FormEventHandler, useRef} from 'react'
+import type {AuthValues} from '../typescript/interfaces'
 import type {
   RequirementsPasswordState,
   ResponseData,
@@ -12,16 +12,16 @@ import {
   ValidationFormWarnings,
 } from '../typescript/enums'
 
-import { useRouter } from 'next/router'
-import { useState } from 'react'
+import {useRouter} from 'next/router'
+import {useState} from 'react'
 
 import AuthLayout from '../components/AuthLayout'
 import FormInput from '../components/FormInput'
 import ResponseMessage from '../components/ResponseMessage'
 
-import { useHttp } from '../hooks/http.hook'
+import {useHttp} from '../hooks/http.hook'
 
-import { isStrongPassword } from '../lib/functions'
+import {isStrongPassword} from '../lib/functions'
 
 import validator from 'validator'
 
@@ -89,7 +89,7 @@ const AuthPage: NextPage = () => {
     })
 
   const passwordInputRef = useRef<HTMLInputElement | null>(null)
-  const { request, isRequestInProcess } = useHttp()
+  const {request, isRequestInProcess} = useHttp()
   const router = useRouter()
 
   const requirementsPasswordList = {
@@ -111,7 +111,7 @@ const AuthPage: NextPage = () => {
     validator: string,
     value: boolean | undefined
   ) => {
-    setValidationValue((state) => ({ ...state, [validator]: value }))
+    setValidationValue((state) => ({...state, [validator]: value}))
   }
 
   const changeRequirementsState = (
@@ -183,9 +183,7 @@ const AuthPage: NextPage = () => {
     if (currentValue === '') resetRequirementState()
   }
 
-  const validationRegisterConfirmPassword: ChangeEventHandler<
-    HTMLInputElement
-  > = (event) => {
+  const validationRegisterConfirmPassword: ChangeEventHandler<HTMLInputElement> = (event) => {
     const currentName = event.target.name
     const currentValue = event.target.value
     const isConfirmPasswordInput = currentName === 'confirmPassword'
@@ -233,7 +231,7 @@ const AuthPage: NextPage = () => {
   }
 
   const closeResponseMessage = () => {
-    setResponseMessageState((state) => ({ ...state, isHideMessage: true }))
+    setResponseMessageState((state) => ({...state, isHideMessage: true}))
   }
 
   const toggleFormLogin = () => {
@@ -248,17 +246,17 @@ const AuthPage: NextPage = () => {
 
     const isInputsEmpty = !isLoginForm
       ? registerValueInput.confirmPassword === '' ||
-        registerValueInput.name === '' ||
-        globalValueInput.email === '' ||
-        globalValueInput.password === ''
+      registerValueInput.name === '' ||
+      globalValueInput.email === '' ||
+      globalValueInput.password === ''
       : globalValueInput.email === '' || globalValueInput.password === ''
 
     const isInputsNotValid = !isLoginForm
       ? !validationValue.isEmailCorrect ||
-        !validationValue.isPasswordConfirm ||
-        !requirementsPasswordState.isMinLenght ||
-        !requirementsPasswordState.isMinUppercase ||
-        !requirementsPasswordState.isMinNumbers
+      !validationValue.isPasswordConfirm ||
+      !requirementsPasswordState.isMinLenght ||
+      !requirementsPasswordState.isMinUppercase ||
+      !requirementsPasswordState.isMinNumbers
       : false
 
     if (isInputsEmpty) {
@@ -284,13 +282,13 @@ const AuthPage: NextPage = () => {
     const url = !isLoginForm ? '/api/auth/register' : '/api/auth/login'
 
     const body = !isLoginForm
-      ? { ...globalValueInput, ...registerValueInput }
+      ? {...globalValueInput, ...registerValueInput}
       : globalValueInput
 
     const response = await request<ResponseData>(url, {
       method: 'POST',
       body: JSON.stringify(body),
-      headers: { 'Content-Type': 'application/json' },
+      headers: {'Content-Type': 'application/json'},
     })
 
     if (!response.success) {
@@ -313,7 +311,7 @@ const AuthPage: NextPage = () => {
           router.push(RoutePaths.HomePage)
         }
       }, 1000)
-    }, 1500)
+    }, 1000)
   }
 
   return (
@@ -433,8 +431,8 @@ const AuthPage: NextPage = () => {
                 {isRequestInProcess
                   ? 'Отправляется...'
                   : isLoginForm
-                  ? 'Войти'
-                  : 'Зарегистрироваться'}
+                    ? 'Войти'
+                    : 'Зарегистрироваться'}
               </button>
               <button
                 type='button'
