@@ -63,3 +63,12 @@ export interface PostsList {
   date: string
   tag?: string
 }
+
+export interface WorksList {
+  id: number
+  image: StaticImageData
+  title: string
+  text: string
+  tags: string[]
+  href: string
+}

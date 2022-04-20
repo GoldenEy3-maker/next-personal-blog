@@ -8,6 +8,7 @@
   --base-yellow-bg: 67, 100%;
   --base-green-color: 113, 85%;
   --base-font-yellow-color: 54, 78%;
+  --base-orange-color: 32, 83%;
 
   // Hsl
   --black-hsl: hsl(var(--base-black), 0%);
@@ -25,7 +26,10 @@
   --primary-yellow-bg-hsla: hsla(var(--base-yellow-bg), 30%, 0.8);
   --primary-green-color-hsl: hsl(var(--base-green-color), 41%);
   --secondary-font-color-hsl: hsl(var(--base-black), 51%);
+  --gray-font-color-hsl: hsl(var(--base-white), 82%);
   --yellow-font-color-hsl: hsl(var(--base-font-yellow-color), 80%);
+  --orange-color-hsl: hsl(var(--base-orange-color), 52%);
+  --darken-orange-color-hsl: hsl(var(--base-orange-color), 45%);
 
   // Resolutions
   --max-width-container: 1230;

@@ -1,0 +1,117 @@
+@import "../functions";
+
+.profile {
+  &__inner {
+    padding: 30px adaptive-value(50, 20, 991.98);
+    margin: 30px 0;
+  }
+
+  &__title {
+    font-size: adaptive-value(30, 25);
+
+    margin-bottom: adaptive-value(50, 30);
+  }
+
+  @media (max-width: 991.98px) {
+    &__inner {
+      padding: 30px 20px;
+    }
+  }
+}
+
+.profileForm {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  gap: 30px;
+
+  @media (max-width: 767px) {
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+  }
+}
+
+.profileFormInputs {
+  order: 2;
+
+  &__list {
+
+  }
+
+  &__item {
+    width: adaptive-value(400, 260, 991.98);
+  }
+
+  &__sendBtn {
+    button {
+      cursor: pointer;
+
+      border-radius: 5px;
+      border: none;
+
+      padding: 10px 15px;
+
+      font-size: adaptive-value(20, 17);
+
+      color: var(--white-hsl);
+      background-color: var(--primary-blue-hsl);
+    }
+
+  }
+
+  @media (max-width: 991.98px) {
+    &__item {
+      width: media-adaptive-value(400, 300, 991.98, 767);
+    }
+  }
+
+  @media (max-width: 767px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &__item {
+      width: media-adaptive-value(400, 240, 767);
+    }
+  }
+
+  @media (max-width: 375px) {
+    display: block;
+  }
+}
+
+.profileFormAvatar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  order: 1;
+
+  label {
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 30px;
+
+    width: adaptive-value(400, 300, 1100);
+    height: adaptive-value(400, 300, 1100);
+
+    box-shadow: 0 7px 15px rgba(black, .45);
+
+    background-color: var(--primary-black-hsl);
+  }
+
+  input[type=file] {
+    display: none;
+  }
+
+  @media (max-width: 991.98px) {
+    label {
+      width: media-adaptive-value(400, 250, 991.98);
+      height: media-adaptive-value(400, 250, 991.98);
+    }
+  }
+}

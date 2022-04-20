@@ -8,7 +8,7 @@
 
     box-shadow: 0 0 20px rgba(black, .45);
 
-    padding: adaptive-value(30, 20) adaptive-value(40, 20);
+    padding: adaptive-value(30, 5) adaptive-value(40, 20) adaptive-value(30, 20);
 
     background-color: var(--primary-color-hsl);
   }
@@ -19,7 +19,7 @@
   align-items: center;
   justify-content: space-between;
 
-  margin-bottom: adaptive-value(20, 10);
+  margin-bottom: adaptive-value(20, 15);
 
   > button {
     cursor: pointer;
@@ -41,8 +41,8 @@
   align-items: center;
 
   &__icon {
-    width: adaptive-value(27, 17);
-    height: adaptive-value(27, 17);
+    width: adaptive-value(27, 20);
+    height: adaptive-value(27, 20);
 
     margin-left: 10px;
   }

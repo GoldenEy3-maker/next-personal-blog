@@ -10,6 +10,8 @@
 .postsItem {
   margin-bottom: adaptive-value(60, 30);
 
+  overflow: hidden;
+
   border-radius: 5px;
 
   box-shadow: 0 15px 25px rgba(0, 0, 0, 0.35);
@@ -22,10 +24,6 @@
   }
 
   &__attach {
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-
-    overflow: hidden;
   }
 
   &__info {

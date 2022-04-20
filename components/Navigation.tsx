@@ -1,15 +1,17 @@
-import type { MouseEvent, MouseEventHandler } from 'react'
-import { RoutePaths } from '../typescript/enums'
+import type {MouseEvent, MouseEventHandler} from 'react'
+import {RoutePaths} from '../typescript/enums'
 
 import Link from 'next/link'
-import { useEffect, useRef, useState } from 'react'
+import {useEffect, useRef, useState} from 'react'
 
-import { useWindowContext } from '../context/window.context'
-import { useSearchContext } from '../context/search.context'
+import {useWindowContext} from '../context/window.context'
+import {useSearchContext} from '../context/search.context'
 
-import { setDynamicClasses } from '../lib/functions'
+import {setDynamicClasses} from '../lib/functions'
 
 import styles from '../styles/modules/Navigation.module.scss'
+import {useRouter} from "next/router";
+import {useSidebarContext} from "../context/sidebar.context";
 
 const {
   nav,
@@ -33,17 +35,20 @@ const Navigation = () => {
     height: undefined,
     isActive: true,
   })
-  const { setSearchValueByTagContent } = useSearchContext()
 
+  const router = useRouter()
+
+  const {toggleSidebarState} = useSidebarContext()
+  const {setSearchValueByTagContent} = useSearchContext()
   const isWindowInLaptopSize = useWindowContext()
 
   const refSubmenu = useRef<HTMLDivElement>(null)
 
   const toggleSubmenu = () => {
-    setSubmenuState((state) => ({ ...state, isActive: !state.isActive }))
+    setSubmenuState((state) => ({...state, isActive: !state.isActive}))
   }
 
-  const handleActivSubmenuHeight = () => {
+  const handleActiveSubmenuHeight = () => {
     if (isWindowInLaptopSize) {
       return {
         height: submenuState.isActive ? `${submenuState.height}px` : 0,
@@ -51,6 +56,30 @@ const Navigation = () => {
     }
 
     return {}
+  }
+
+  const cancelDefaultClickLink: MouseEventHandler<HTMLAnchorElement> = (event) => {
+    event.preventDefault()
+  }
+
+  const clickSubmenuLinkHandler: MouseEventHandler<HTMLAnchorElement> = (event) => {
+    if (router.route === RoutePaths.SearchPage) {
+      cancelDefaultClickLink(event)
+    }
+
+    toggleSidebarState()
+
+    setSearchValueByTagContent(event)
+  }
+
+  const clickNavLinkHandler: MouseEventHandler<HTMLAnchorElement> = (event) => {
+    const hrefLinkPath = event.currentTarget.getAttribute('href')
+
+    if (router.route === hrefLinkPath) {
+      cancelDefaultClickLink(event)
+    }
+
+    toggleSidebarState()
   }
 
   useEffect(() => {
@@ -69,7 +98,7 @@ const Navigation = () => {
         <ul className={nav__list}>
           <li className={nav__item}>
             <Link href={RoutePaths.HomePage}>
-              <a>Главная</a>
+              <a onClick={clickNavLinkHandler}>Главная</a>
             </Link>
           </li>
           <li
@@ -80,8 +109,8 @@ const Navigation = () => {
             })}
             onClick={toggleSubmenu}
           >
-            <Link href='#'>
-              <a>
+            <Link href={RoutePaths.HomePage}>
+              <a onClick={cancelDefaultClickLink}>
                 Статьи
                 <span className={nav__item_icon}>
                   <svg
@@ -91,7 +120,7 @@ const Navigation = () => {
                     fill='none'
                     xmlns='http://www.w3.org/2000/svg'
                   >
-                    <path d='M5 5L0.669872 0.5L9.33013 0.5L5 5Z' fill='white' />
+                    <path d='M5 5L0.669872 0.5L9.33013 0.5L5 5Z' fill='white'/>
                   </svg>
                 </span>
               </a>
@@ -100,7 +129,7 @@ const Navigation = () => {
             <div
               ref={refSubmenu}
               className={navSubmenu}
-              style={handleActivSubmenuHeight()}
+              style={handleActiveSubmenuHeight()}
             >
               <ul
                 className={navSubmenu__list}
@@ -110,19 +139,19 @@ const Navigation = () => {
               >
                 <li className={navSubmenu__item}>
                   <Link href={RoutePaths.SearchPage}>
-                    <a onClick={setSearchValueByTagContent}>Создание сайтов</a>
+                    <a onClick={clickSubmenuLinkHandler}>Создание сайтов</a>
                   </Link>
                 </li>
                 <li className={navSubmenu__item}>
                   <Link href={RoutePaths.SearchPage}>
-                    <a onClick={setSearchValueByTagContent}>
+                    <a onClick={clickSubmenuLinkHandler}>
                       Интернет-маркетинг
                     </a>
                   </Link>
                 </li>
                 <li className={navSubmenu__item}>
                   <Link href={RoutePaths.SearchPage}>
-                    <a onClick={setSearchValueByTagContent}>
+                    <a onClick={clickSubmenuLinkHandler}>
                       Продвижение видео
                     </a>
                   </Link>
@@ -131,13 +160,13 @@ const Navigation = () => {
             </div>
           </li>
           <li className={nav__item}>
-            <Link href='#'>
-              <a>Обо мне</a>
+            <Link href={RoutePaths.HomePage}>
+              <a onClick={clickNavLinkHandler}>Обо мне</a>
             </Link>
           </li>
           <li className={nav__item}>
-            <Link href='#'>
-              <a>Реклама</a>
+            <Link href={RoutePaths.HomePage}>
+              <a onClick={clickNavLinkHandler}>Реклама</a>
             </Link>
           </li>
         </ul>
@@ -145,9 +174,11 @@ const Navigation = () => {
       <div className={nav__flexContainer}>
         <ul className={nav__list}>
           <li className={nav__item}>
-            <Link href={RoutePaths.ProfilePage}>
-              <a>Профиль</a>
-            </Link>
+            {router.route === RoutePaths.ProfilePage ? <Link href='/api/auth/logout'>
+              <a onClick={clickNavLinkHandler}>Выход</a>
+            </Link> : <Link href={RoutePaths.ProfilePage}>
+              <a onClick={clickNavLinkHandler}>Профиль</a>
+            </Link>}
           </li>
         </ul>
       </div>

@@ -2,16 +2,20 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import Navigation from './Navigation'
+import {useRouter} from "next/router";
 
-import { useSidebarContext } from '../context/sidebar.context'
-import { useWindowContext } from '../context/window.context'
+import {useSidebarContext} from '../context/sidebar.context'
+import {useWindowContext} from '../context/window.context'
 
-import { setDynamicClasses, setStaticClasses } from '../lib/functions'
+import {setDynamicClasses, setStaticClasses} from '../lib/functions'
 
 import styles from '../styles/modules/Sidebar.module.scss'
 
 import Avatar from '../public/images/avatar.jpg'
 import SidebarBgPicture from '../public/images/Sidebar_bg_picture2.jpg'
+import {RoutePaths} from "../typescript/enums";
+import {MouseEventHandler} from "react";
+import {usePopupContext} from "../context/popup.context";
 
 const {
   sidebar,
@@ -38,8 +42,19 @@ const {
 } = styles
 
 const Sidebar = () => {
-  const { isSidebarActive, toggleSidebarState } = useSidebarContext()
+  const router = useRouter()
+
+  const {openPopup} = usePopupContext()
+  const {isSidebarActive, toggleSidebarState} = useSidebarContext()
   const isWindowInLaptopSize = useWindowContext()
+
+  const clickButtonLinkHandler: MouseEventHandler<HTMLAnchorElement> = (event) => {
+    if (router.route === RoutePaths.WorksPage) {
+      event.preventDefault()
+    }
+
+    toggleSidebarState()
+  }
 
   return (
     <>
@@ -50,7 +65,7 @@ const Sidebar = () => {
           conditions: [isSidebarActive],
         })}
         onClick={toggleSidebarState}
-      ></div>
+      />
       <aside
         className={setDynamicClasses({
           staticClasses: [sidebar],
@@ -70,7 +85,7 @@ const Sidebar = () => {
           <div className={sidebarProfile}>
             <div className={sidebarProfile__inner}>
               <div className={sidebarProfile__avatar}>
-                <Image src={Avatar} alt='avatar' />
+                <Image src={Avatar} alt='avatar'/>
               </div>
               <div className={sidebarProfile__description}>
                 <div className={sidebarProfile__name}>Дмитрий Валак</div>
@@ -82,40 +97,12 @@ const Sidebar = () => {
                 <ul className={sidebarProfileSocials__list}>
                   <li className={sidebarProfileSocials__item}>
                     <a href='#' target='_blank'>
-                      <svg
-                        width='25'
-                        height='25'
-                        viewBox='0 0 25 25'
-                        fill='none'
-                        xmlns='http://www.w3.org/2000/svg'
-                      >
-                        <g clipPath='url(#clip0_11_403)'>
-                          <path
-                            d='M1.5625 1.70104C-0.402079 3.74166 4.11272e-06 5.90937 4.11272e-06 12.4948C4.11272e-06 17.9635 -0.954163 23.4458 4.03959 24.7365C5.59896 25.1375 19.4156 25.1375 20.9729 24.7344C23.0521 24.1979 24.7438 22.5115 24.975 19.5708C25.0073 19.1604 25.0073 5.83646 24.974 5.41771C24.7281 2.28541 22.8 0.480206 20.2594 0.114581C19.6771 0.0302058 19.5604 0.0052058 16.5729 -2.53692e-06C5.97605 0.0052058 3.65313 -0.466669 1.5625 1.70104Z'
-                            fill='url(#paint0_linear_11_403)'
-                          />
-                          <path
-                            d='M12.4979 3.2698C8.71563 3.2698 5.12397 2.93334 3.75209 6.45418C3.18543 7.90834 3.26772 9.79689 3.26772 12.5011C3.26772 14.874 3.19168 17.1042 3.75209 18.5469C5.12084 22.0698 8.74168 21.7323 12.4958 21.7323C16.1177 21.7323 19.8521 22.1094 21.2406 18.5469C21.8083 17.0781 21.725 15.2177 21.725 12.5011C21.725 8.8948 21.924 6.56668 20.175 4.81876C18.4042 3.04793 16.0094 3.2698 12.4938 3.2698H12.4979ZM11.6708 4.93334C19.5604 4.92084 20.5646 4.04376 20.0104 16.2281C19.8135 20.5375 16.5323 20.0646 12.499 20.0646C5.1448 20.0646 4.93334 19.8542 4.93334 12.4969C4.93334 5.05418 5.51668 4.93751 11.6708 4.93126V4.93334ZM17.425 6.46564C16.8135 6.46564 16.3177 6.96147 16.3177 7.57293C16.3177 8.18439 16.8135 8.68022 17.425 8.68022C18.0365 8.68022 18.5323 8.18439 18.5323 7.57293C18.5323 6.96147 18.0365 6.46564 17.425 6.46564ZM12.4979 7.76043C9.88022 7.76043 7.75834 9.88335 7.75834 12.5011C7.75834 15.1188 9.88022 17.2406 12.4979 17.2406C15.1156 17.2406 17.2365 15.1188 17.2365 12.5011C17.2365 9.88335 15.1156 7.76043 12.4979 7.76043ZM12.4979 9.42397C16.5656 9.42397 16.5708 15.5781 12.4979 15.5781C8.43126 15.5781 8.42501 9.42397 12.4979 9.42397Z'
-                            fill='white'
-                          />
-                        </g>
-                        <defs>
-                          <linearGradient
-                            id='paint0_linear_11_403'
-                            x1='1.61044'
-                            y1='23.4032'
-                            x2='24.8453'
-                            y2='3.29372'
-                            gradientUnits='userSpaceOnUse'
-                          >
-                            <stop stopColor='#8E7F42' />
-                            <stop offset='0.5' stopColor='#FF543E' />
-                            <stop offset='1' stopColor='#C837AB' />
-                          </linearGradient>
-                          <clipPath id='clip0_11_403'>
-                            <rect width='25' height='25' fill='white' />
-                          </clipPath>
-                        </defs>
+                      <svg enableBackground="new 0 0 512 512" id="Layer_1" version="1.1" viewBox="0 0 512 512"
+                           xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="256" cy="256" fill="#0088CC" id="ellipse" r="256"/>
+                        <path
+                          d="M246.4,332.1c-12.3,11.9-24.4,23.7-36.5,35.5c-4.2,4.1-8.9,6.4-15,6.1c-4.1-0.2-6.4-2-7.7-5.9  c-9.2-28.6-18.6-57.2-27.8-85.9c-0.9-2.8-2.2-4.1-5-5c-21.7-6.6-43.5-13.4-65.1-20.3c-3.3-1.1-6.7-2.4-9.6-4.4  c-4.5-3-5.1-7.9-1.1-11.5c3.7-3.3,8.1-6.1,12.7-7.9c26.6-10.5,53.3-20.7,80-31c67.7-26.1,135.4-52.3,203.1-78.4  c12.9-5,22.8,2,21.4,16c-0.9,8.9-3.2,17.7-5,26.5c-14.7,69.4-29.4,138.9-44.2,208.3c-3.5,16.5-15.1,20.8-28.6,10.8  c-22.7-16.7-45.4-33.5-68.1-50.3C248.8,333.8,247.7,333,246.4,332.1z M195.4,353.2c0.3-0.1,0.5-0.1,0.8-0.2c0.1-0.7,0.3-1.3,0.4-1.9  c1.5-15.7,3-31.5,4.3-47.2c0.3-3.5,1.5-6,4.1-8.4c20.9-18.7,41.8-37.6,62.6-56.4c23.1-20.8,46.2-41.6,69.2-62.5c1.4-1.3,2-3.5,3-5.3  c-2.2-0.2-4.5-1.1-6.5-0.6c-2.7,0.7-5.2,2.3-7.6,3.8c-50.9,32.1-101.9,64.2-152.8,96.3c-2.9,1.8-3.4,3.3-2.3,6.5  c3.8,10.8,7.2,21.7,10.7,32.6C186,324.3,190.7,338.8,195.4,353.2z"
+                          fill="#FFFFFF" id="logo"/>
                       </svg>
                     </a>
                   </li>
@@ -162,7 +149,7 @@ const Sidebar = () => {
                         </g>
                         <defs>
                           <clipPath id='clip0_8_49'>
-                            <rect width='25' height='25' fill='white' />
+                            <rect width='25' height='25' fill='white'/>
                           </clipPath>
                         </defs>
                       </svg>
@@ -178,14 +165,13 @@ const Sidebar = () => {
                 наработал более 10 000 часов в создании сайтов различной
                 сложности.
               </p>
-              {isWindowInLaptopSize && <Navigation />}
+              {isWindowInLaptopSize && <Navigation/>}
             </div>
           </div>
-
           <div className={sidebarControls}>
             <div className={sidebarControls__inner}>
-              <Link href='#'>
-                <a>
+              <Link href={RoutePaths.WorksPage}>
+                <a onClick={clickButtonLinkHandler}>
                   <button
                     className={setStaticClasses([
                       sidebarControls__button,
@@ -201,6 +187,7 @@ const Sidebar = () => {
                   sidebarControls__button,
                   sidebarControls__button__blue,
                 ])}
+                onClick={() => openPopup('contactPopup')}
               >
                 Написать мне
               </button>

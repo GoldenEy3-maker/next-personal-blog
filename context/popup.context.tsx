@@ -1,31 +1,44 @@
 import type {ChildrenProps} from "../typescript/types";
 
-import {createContext, useContext, useState} from "react";
+import {createContext, useContext, useEffect, useState} from "react";
 
 import {useScroll} from "../hooks/scroll.hook";
 
-// export interface PopupContextStorage {
-//
-// }
+export interface PopupContextStorage {
+  popupState: {
+    contactPopup: boolean
+    sharePopup: boolean
+  }
+  openPopup: (popupName: string) => void
+  closePopup: (popupName: string) => void
+}
 
-const PopupContext = createContext<boolean | null>(null)
+const PopupContext = createContext<PopupContextStorage | null>(null)
 
 export const PopupContextProvider = ({children}: ChildrenProps) => {
-  const [popupState, setPopupState] = useState(false)
+  const [popupState, setPopupState] = useState({
+    contactPopup: false,
+    sharePopup: false
+  })
 
-  const {lockBody, unlockBody} = useScroll()
+  const {lockBody, unlockBody, getScrollbarCompensation, setScrollbarCompensationState} = useScroll()
 
-  const closePopup = () => {
-    setPopupState(false)
-    unlockBody()
-  }
-
-  const openPopup = () => {
-    setPopupState(true)
+  const openPopup = (popupName: string) => {
+    setPopupState(state => ({...state, [popupName]: true}))
     lockBody()
   }
 
-  return (<PopupContext.Provider value={popupState}>
+  const closePopup = (popupName: string) => {
+    setPopupState(state => ({...state, [popupName]: false}))
+    unlockBody()
+  }
+
+  useEffect(() => {
+    const compensation = getScrollbarCompensation()
+    setScrollbarCompensationState(compensation)
+  }, [getScrollbarCompensation, setScrollbarCompensationState])
+
+  return (<PopupContext.Provider value={{popupState, openPopup, closePopup}}>
     {children}
   </PopupContext.Provider>)
 }

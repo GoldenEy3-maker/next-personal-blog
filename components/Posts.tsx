@@ -4,13 +4,14 @@ import {RoutePaths} from '../typescript/enums'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import {useCallback, useEffect, useState} from "react";
+import {MouseEventHandler, useCallback, useEffect, useState} from "react";
 
 import {useSearchContext} from '../context/search.context'
 
 import {setCurrentDatetime} from '../lib/functions'
 
 import styles from '../styles/modules/Posts.module.scss'
+import {useRouter} from "next/router";
 
 type PostsPropsType = {
   postsList: PostsList[]
@@ -37,11 +38,21 @@ const {
 const Posts = ({postsList, filterBy = ''}: PostsPropsType) => {
   const [postsData, setPostsData] = useState(postsList)
 
+  const router = useRouter()
+
   const {setSearchValueByTagContent} = useSearchContext()
 
   const searchingByFilter = useCallback((title: string | undefined, text: string, tag: string | undefined): boolean => {
     return title?.trim().toUpperCase().includes(filterBy) || tag?.trim().toUpperCase().includes(filterBy) || text.trim().toUpperCase().includes(filterBy)
   }, [filterBy])
+
+  const clickTagLink: MouseEventHandler<HTMLAnchorElement> = (event) => {
+    if (router.route === RoutePaths.SearchPage) {
+      event.preventDefault()
+    }
+
+    setSearchValueByTagContent(event)
+  }
 
   useEffect(() => {
     if (filterBy !== undefined) {
@@ -89,7 +100,7 @@ const Posts = ({postsList, filterBy = ''}: PostsPropsType) => {
                     {post.tag !== undefined && (
                       <span className={postsItemControlsExtrainfo__tag}>
                             <Link href={RoutePaths.SearchPage}>
-                              <a onClick={setSearchValueByTagContent}>
+                              <a onClick={clickTagLink}>
                                 {post.tag}
                               </a>
                             </Link>
@@ -97,7 +108,7 @@ const Posts = ({postsList, filterBy = ''}: PostsPropsType) => {
                     )}
                   </div>
                   <div className={postsItemControls__button}>
-                    <Link href={'#'}>
+                    <Link href={`/posts/${post.id}`}>
                       <a>Читать</a>
                     </Link>
                   </div>

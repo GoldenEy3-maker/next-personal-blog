@@ -21,8 +21,9 @@ body {
   &._lockScroll {
     overflow: hidden;
 
-    padding-right: var(--scrollCompensation)
+    padding-right: var(--scrollbarCompensation)
   }
+
 }
 
 a {
@@ -38,7 +39,6 @@ a {
 .wrapper {
   width: 100%;
   min-height: 100%;
-  //min-height: 100vh;
 
   display: flex;
   flex-direction: column;

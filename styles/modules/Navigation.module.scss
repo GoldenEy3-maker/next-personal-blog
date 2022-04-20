@@ -175,8 +175,8 @@
     box-shadow: none;
 
     transition: opacity 0.4s var(--pop-cubic-bazier),
-      visibility 0.4s var(--pop-cubic-bazier),
-      height 0.4s var(--pop-cubic-bazier);
+    visibility 0.4s var(--pop-cubic-bazier),
+    height 0.4s var(--pop-cubic-bazier);
 
     ._active_submenu & {
       opacity: 1;

@@ -1,4 +1,4 @@
-import type { FormInputComponent } from '../typescript/interfaces'
+import type {FormInputComponent} from '../typescript/interfaces'
 
 import React, {
   ChangeEvent,
@@ -8,7 +8,7 @@ import React, {
   useState,
 } from 'react'
 
-import { setDynamicClasses } from '../lib/functions'
+import {setDynamicClasses} from '../lib/functions'
 
 import styles from '../styles/modules/FormInput.module.scss'
 
@@ -32,23 +32,23 @@ const {
 } = styles
 
 const FormInput: FormInputComponent = ({
-  className,
-  label,
-  type,
-  name,
-  id,
-  value,
-  placeholder,
-  disabled,
-  height = '100%',
-  inputRef,
-  changeHandler,
-  validation,
-  requirements,
-  blurState,
-  hideState,
-  isLastInput,
-}) => {
+                                         className,
+                                         label,
+                                         type,
+                                         name,
+                                         id,
+                                         value,
+                                         placeholder,
+                                         disabled,
+                                         height = '100%',
+                                         inputRef,
+                                         changeHandler,
+                                         validation,
+                                         requirements,
+                                         blurState,
+                                         hideState,
+                                         isLastInput,
+                                       }) => {
   const [isFocusInput, setIsFocusInput] = useState(false)
 
   const handlerFocusInput = () => {
@@ -128,7 +128,7 @@ const FormInput: FormInputComponent = ({
   }
 
   const setInlineStylesVariable = (name: string, value: string) => {
-    return { [name]: value } as React.CSSProperties
+    return {[name]: value} as React.CSSProperties
   }
 
   useEffect(() => {
@@ -146,9 +146,9 @@ const FormInput: FormInputComponent = ({
       })}
       style={setInlineStylesVariable('--input-height', height)}
     >
-      <label htmlFor={id} className={formInputsItem__label}>
+      {label !== undefined && <label htmlFor={id} className={formInputsItem__label}>
         {label}
-      </label>
+      </label>}
       <div className={formInputsItem__input}>
         <input
           type={type}

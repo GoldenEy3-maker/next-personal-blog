@@ -18,6 +18,7 @@ import stylesPosts from '../../styles/modules/Posts.module.scss'
 import styles from '../../styles/modules/Post.module.scss'
 
 import {postsList} from "../../serverData/postsList";
+import {usePopupContext} from "../../context/popup.context";
 
 const {
   postsItemControlsExtrainfo,
@@ -48,6 +49,7 @@ const {
 const PostPage: NextPage = () => {
   const [postData, setPostData] = useState<PostsList | undefined>(undefined)
 
+  const {openPopup} = usePopupContext()
   const {setSearchValueByTagContent} = useSearchContext()
 
   const router = useRouter()
@@ -68,7 +70,7 @@ const PostPage: NextPage = () => {
           <div className={postControls}>
             <button type='button' onClick={buttonReturnClickHandler}>вернуться назад</button>
             <button type='button' className={postControlsShare}>
-              <span className={postControlsShare__text}>поделиться</span>
+              <span className={postControlsShare__text} onClick={() => openPopup('sharePopup')}>поделиться</span>
               <div className={postControlsShare__icon}>
                 <svg viewBox="0 0 28 27" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path

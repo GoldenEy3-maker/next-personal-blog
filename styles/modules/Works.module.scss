@@ -1,0 +1,126 @@
+@import "../functions";
+
+.works {
+  &__inner {
+    margin: 30px 0;
+  }
+}
+
+.worksItem {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+
+  margin-bottom: 60px;
+
+  overflow: hidden;
+
+  border-radius: 5px;
+  box-shadow: 0 0 20px rgba(black, .45);
+  background-color: var(--primary-black-hsl);
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 767px) {
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+  }
+}
+
+.worksItemContent {
+  padding: adaptive-value(25, 20) adaptive-value(25, 15);
+
+  display: flex;
+  flex-direction: column;
+
+
+  &__title {
+    font-size: adaptive-value(35, 30);
+    line-height: adaptive-value(28, 25);
+
+    margin-bottom: adaptive-value(27, 20);
+  }
+
+  &__text {
+    font-size: adaptive-value(23, 17);
+    line-height: adaptive-value(35, 27);
+
+    margin-bottom: adaptive-value(37, 15);
+
+    color: var(--gray-font-color-hsl);
+  }
+
+  &__link {
+    margin-top: auto;
+
+    box-shadow: 0 4px 15px -7px rgba(48, 55, 201, 0.3);
+
+    border-radius: 5px;
+
+    background-color: var(--primary-blue-hsl);
+
+    transition: background-color .2s ease;
+
+    a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      width: 100%;
+      height: 100%;
+      padding: adaptive-value(11, 8) adaptive-value(17, 10);
+
+      font-size: adaptive-value(20, 16);
+      line-height: adaptive-value(25, 20);
+    }
+
+    @media screen and (min-width: 991.98px) {
+      &:hover {
+        background-color: var(--primary-darken-blue-hsl);
+      }
+    }
+  }
+}
+
+.worksItemContentTags {
+  margin: adaptive-value(30, 20) 0 30px;
+
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+
+    gap: adaptive-value(15, 10);
+  }
+
+  &__item {
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    flex: 0 1 calc((100% / 3) - 19px);
+
+    font-size: adaptive-value(20, 17);
+    line-height: adaptive-value(27, 23);
+
+    white-space: nowrap;
+
+    padding: adaptive-value(10, 7) adaptive-value(15, 10);
+
+    border-radius: 5px;
+
+    background-color: var(--orange-color-hsl);
+
+    transition: background-color .2s ease;
+
+    @media screen and (min-width: 991.98px) {
+      &:hover {
+        background-color: var(--darken-orange-color-hsl);
+      }
+    }
+  }
+}

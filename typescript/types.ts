@@ -1,4 +1,4 @@
-import type {ChangeEventHandler, ReactNode} from 'react'
+import type {ChangeEventHandler, ReactFragment, ReactNode} from 'react'
 import {ResponseMessageType} from './enums'
 
 
@@ -10,6 +10,7 @@ export type ChildrenProps = {
     | JSX.Element[]
     | string
     | string[]
+    | ReactFragment
 }
 
 export type ResponseData<DataType = null> = {
@@ -55,12 +56,12 @@ export type RequirementsProp = {
 
 export type FormInputProps = {
   className?: string
-  label: string
+  label?: string
   type: string
   name: string
-  id: string
+  id?: string
   value: string
-  placeholder: string
+  placeholder?: string
   disabled?: boolean
   height?: string
   inputRef?: React.Ref<HTMLInputElement>
