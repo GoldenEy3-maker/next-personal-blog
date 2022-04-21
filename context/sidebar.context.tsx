@@ -17,7 +17,9 @@ export const SidebarContextProvider = ({children}: ChildrenProps) => {
   const toggleSidebarState = () => {
     setIsActive((prev) => !prev)
 
-    toggleLockBody(!isSidebarActive)
+    if (isLaptopSize) {
+      toggleLockBody(!isSidebarActive)
+    }
   }
 
   useEffect(() => {

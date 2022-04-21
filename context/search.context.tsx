@@ -1,4 +1,4 @@
-import type { ChildrenProps } from '../typescript/types'
+import type {ChildrenProps} from '../typescript/types'
 import type {
   Dispatch,
   MouseEvent,
@@ -6,7 +6,7 @@ import type {
   SetStateAction,
 } from 'react'
 
-import { createContext, useState, useContext } from 'react'
+import {createContext, useState, useContext} from 'react'
 
 interface SearchValueByTagContent {
   <HTMLTag>(event: MouseEvent<HTMLTag>): void
@@ -18,9 +18,9 @@ interface SearchContextStorage {
   setSearchValueByTagContent: MouseEventHandler<HTMLAnchorElement>
 }
 
-const SeachContext = createContext<SearchContextStorage | null>(null)
+const SearchContext = createContext<SearchContextStorage | null>(null)
 
-export const SearchContextProvider = ({ children }: ChildrenProps) => {
+export const SearchContextProvider = ({children}: ChildrenProps) => {
   const [searchValue, setSearchValue] = useState('')
 
   const setSearchValueByTagContent: MouseEventHandler<HTMLAnchorElement> = (
@@ -33,13 +33,12 @@ export const SearchContextProvider = ({ children }: ChildrenProps) => {
     )
   }
 
-  const value = { searchValue, setSearchValue, setSearchValueByTagContent }
-
-  return <SeachContext.Provider value={value}>{children}</SeachContext.Provider>
+  return <SearchContext.Provider
+    value={{searchValue, setSearchValue, setSearchValueByTagContent}}>{children}</SearchContext.Provider>
 }
 
 export const useSearchContext = () => {
-  const context = useContext(SeachContext)
+  const context = useContext(SearchContext)
 
   if (context == undefined) {
     throw new Error(
@@ -47,5 +46,5 @@ export const useSearchContext = () => {
     )
   }
 
-  return { ...context }
+  return {...context}
 }
