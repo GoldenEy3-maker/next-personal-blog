@@ -7,6 +7,7 @@ import type {
 } from 'react'
 
 import {createContext, useState, useContext} from 'react'
+import {useDebounce} from "../hooks/debounce.hook";
 
 interface SearchValueByTagContent {
   <HTMLTag>(event: MouseEvent<HTMLTag>): void
@@ -16,12 +17,15 @@ interface SearchContextStorage {
   searchValue: string
   setSearchValue: Dispatch<SetStateAction<string>>
   setSearchValueByTagContent: MouseEventHandler<HTMLAnchorElement>
+  debouncedSearchValue: string
 }
 
 const SearchContext = createContext<SearchContextStorage | null>(null)
 
 export const SearchContextProvider = ({children}: ChildrenProps) => {
   const [searchValue, setSearchValue] = useState('')
+
+  const debouncedSearchValue = useDebounce(searchValue, 500)
 
   const setSearchValueByTagContent: MouseEventHandler<HTMLAnchorElement> = (
     event
@@ -34,7 +38,12 @@ export const SearchContextProvider = ({children}: ChildrenProps) => {
   }
 
   return <SearchContext.Provider
-    value={{searchValue, setSearchValue, setSearchValueByTagContent}}>{children}</SearchContext.Provider>
+    value={{
+      searchValue,
+      setSearchValue,
+      setSearchValueByTagContent,
+      debouncedSearchValue
+    }}>{children}</SearchContext.Provider>
 }
 
 export const useSearchContext = () => {

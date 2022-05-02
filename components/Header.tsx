@@ -2,11 +2,13 @@ import Navigation from './Navigation'
 
 import SearchBar from './SearchBar'
 
-import { useSidebarContext } from '../context/sidebar.context'
+import {useSidebarContext} from '../context/sidebar.context'
 
-import { setDynamicClasses } from '../lib/functions'
+import {setDynamicClasses} from '../lib/functions'
 
 import styles from '../styles/modules/Header.module.scss'
+import {useEffect} from "react";
+import {usePopupContext} from "../context/popup.context";
 
 const {
   header,
@@ -19,13 +21,13 @@ const {
 } = styles
 
 const Header = () => {
-  const { isSidebarActive, toggleSidebarState } = useSidebarContext()
+  const {isSidebarActive, toggleSidebarState} = useSidebarContext()
 
   return (
     <header className={header}>
       <div className={header__inner}>
         <div className={header__left}>
-          <Navigation />
+          <Navigation/>
           <div
             className={setDynamicClasses({
               staticClasses: [burger],
@@ -40,7 +42,7 @@ const Header = () => {
           </div>
         </div>
         <div className={header__right}>
-          <SearchBar />
+          <SearchBar/>
         </div>
       </div>
     </header>

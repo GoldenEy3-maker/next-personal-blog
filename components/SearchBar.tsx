@@ -1,28 +1,29 @@
-import type { ChangeEventHandler, FormEventHandler } from 'react'
+import type {ChangeEventHandler, FormEventHandler} from 'react'
+import {RoutePaths} from '../typescript/enums'
 
-import { useRouter } from 'next/router'
+import {useRouter} from 'next/router'
 
-import { useState } from 'react'
+import {useState} from 'react'
 
-import { useSearchContext } from '../context/search.context'
+import {useSearchContext} from '../context/search.context'
 
-import { setDynamicClasses } from '../lib/functions'
+import {setDynamicClasses} from '../lib/functions'
 
 import styles from '../styles/modules/Header.module.scss'
-import { RoutePaths } from '../typescript/enums'
 
 const {
   headerSearchForm,
   headerSearchForm__input,
-  _isSeachTyping,
-  _isSeachFocus,
+  _isSearchTyping,
+  _isSearchFocus,
 } = styles
 
 const SearchBar = () => {
   const [isFocus, setIsFocus] = useState(false)
 
-  const { searchValue, setSearchValue } = useSearchContext()
   const router = useRouter()
+
+  const {searchValue, setSearchValue} = useSearchContext()
 
   const changeSearchValueHandler: ChangeEventHandler<HTMLInputElement> = (
     event
@@ -30,7 +31,7 @@ const SearchBar = () => {
     setSearchValue(event.target.value)
   }
 
-  const focusSeachInputHandler = () => {
+  const focusSearchInputHandler = () => {
     setIsFocus(true)
   }
 
@@ -52,7 +53,7 @@ const SearchBar = () => {
     <form
       className={setDynamicClasses({
         staticClasses: [headerSearchForm],
-        dynamicClasses: [[_isSeachFocus], [_isSeachTyping]],
+        dynamicClasses: [[_isSearchFocus], [_isSearchTyping]],
         conditions: [isFocus, searchValue !== ''],
       })}
       onSubmit={submitSearchFormHandler}
@@ -62,7 +63,7 @@ const SearchBar = () => {
         className={headerSearchForm__input}
         value={searchValue}
         onChange={changeSearchValueHandler}
-        onFocus={focusSeachInputHandler}
+        onFocus={focusSearchInputHandler}
         onBlur={blurSearchInputHandler}
       />
       <span>Поиск по блогу</span>

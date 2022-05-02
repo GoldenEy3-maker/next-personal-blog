@@ -11,10 +11,6 @@
 
   background-color: var(--darken-black-custom-hsl);
 
-  ._lockScroll & {
-    padding-right: var(--scrollbarCompensation);
-  }
-
   &__inner {
     display: flex;
     align-items: center;
@@ -101,13 +97,13 @@
     transition: transform 0.3s ease;
   }
 
-  &._isSeachFocus {
+  &._isSearchFocus {
     &:after {
       transform: scale(1);
     }
   }
 
-  &._isSeachTyping {
+  &._isSearchTyping {
     span {
       opacity: 0;
       visibility: hidden;

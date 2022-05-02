@@ -14,11 +14,12 @@ import {postsList} from '../serverData/postsList'
 const SearchPage: NextPage = () => {
   const {searchValue} = useSearchContext()
 
+
   return (
     <MainLayout>
       <Posts
         postsList={postsList}
-        filterBy={searchValue.trim().toUpperCase()}
+        isFiltering={true}
       />
     </MainLayout>
   )

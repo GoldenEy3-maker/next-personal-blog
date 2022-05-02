@@ -15,7 +15,7 @@ import {useRouter} from "next/router";
 
 type PostsPropsType = {
   postsList: PostsList[]
-  filterBy?: string
+  isFiltering?: boolean
 }
 
 const {
@@ -35,16 +35,16 @@ const {
   postsEmpty
 } = styles
 
-const Posts = ({postsList, filterBy = ''}: PostsPropsType) => {
+const Posts = ({postsList, isFiltering = false}: PostsPropsType) => {
   const [postsData, setPostsData] = useState(postsList)
 
   const router = useRouter()
 
-  const {setSearchValueByTagContent} = useSearchContext()
+  const {setSearchValueByTagContent, debouncedSearchValue} = useSearchContext()
 
   const searchingByFilter = useCallback((title: string | undefined, text: string, tag: string | undefined): boolean => {
-    return title?.trim().toUpperCase().includes(filterBy) || tag?.trim().toUpperCase().includes(filterBy) || text.trim().toUpperCase().includes(filterBy)
-  }, [filterBy])
+    return title?.trim().toUpperCase().includes(debouncedSearchValue.trim().toUpperCase()) || tag?.trim().toUpperCase().includes(debouncedSearchValue.trim().toUpperCase()) || text.trim().toUpperCase().includes(debouncedSearchValue.trim().toUpperCase())
+  }, [debouncedSearchValue])
 
   const clickTagLink: MouseEventHandler<HTMLAnchorElement> = (event) => {
     if (router.route === RoutePaths.SearchPage) {
@@ -55,10 +55,10 @@ const Posts = ({postsList, filterBy = ''}: PostsPropsType) => {
   }
 
   useEffect(() => {
-    if (filterBy !== undefined) {
+    if (isFiltering) {
       setPostsData(postsList.filter(({title, text, tag}) => searchingByFilter(title, text, tag)))
     }
-  }, [filterBy, postsList, searchingByFilter])
+  }, [isFiltering, postsList, searchingByFilter])
 
   return (
     <div className={posts}>

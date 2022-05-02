@@ -7,9 +7,11 @@ export const useWindowResize = () => {
   const [isWindowInLaptopSize, setIsWindowInLaptopSize] =
     useState<boolean>(false)
 
+
   const handleWindowResizeListener = () => {
     setIsWindowInLaptopSize(window.innerWidth <= WindowResolutions.LaptopSize)
   }
+
 
   useEffect(() => {
     setIsWindowInLaptopSize(window.innerWidth <= WindowResolutions.LaptopSize)
